@@ -1,0 +1,3 @@
+/usr/bin/cmake -E remove -f CMakeFiles/planeted.dir/objects.a
+/usr/bin/ar cr CMakeFiles/planeted.dir/objects.a @CMakeFiles/planeted.dir/objects1.rsp
+/usr/bin/x86_64-w64-mingw32-g++-posix  -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2  -m64 -s -Wl,--whole-archive CMakeFiles/planeted.dir/objects.a -Wl,--no-whole-archive  -o ../planeted.exe -Wl,--out-implib,libplaneted.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/planeted.dir/linklibs.rsp

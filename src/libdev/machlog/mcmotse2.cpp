@@ -1100,8 +1100,46 @@ bool MachLogMachineMotionSequencer::anyMotionChunkStationary(
 
             if( chunk.startPoint().sqrEuclidianDistance( chunk.endPoint() ) < sqrStationaryDistance )
             {
-                result = true;
-                *pCollisionData = chunkIntersections[ i ];
+                bool treatAsBlocking = true;
+
+                const PhysConfigSpace2d::ObjectId& collisionObjectId =
+                    chunkIntersections[ i ].collisionObjectId();
+
+                if( collisionObjectId != PhysConfigSpace2d::ObjectId::invalidId() )
+                {
+                    const size_t objectId = collisionObjectId.asScalar();
+                    MachLogRaces& races = MachLogRaces::instance();
+
+                    if( races.actorExists( objectId ) and races.actor( objectId ).objectIsMachine() )
+                    {
+                        const MachLogMachineMotionSequencer& obstructingSequencer =
+                            races.actor( objectId ).asMobile().motionSeq();
+
+                        const bool sameCommand =
+                            commandIdSet() and obstructingSequencer.commandIdSet() and
+                            commandId() == obstructingSequencer.commandId();
+
+                        const MachLogMachineMotionSequencer::InternalState otherState =
+                            obstructingSequencer.internalState();
+
+                        const bool otherIsActive =
+                            otherState == INTERNAL_MOVING or
+                            otherState == INTERNAL_WANT_PATH or
+                            otherState == INTERNAL_PLANNING or
+                            otherState == INTERNAL_WANT_DOMAIN_PATH or
+                            otherState == INTERNAL_PLANNING_DOMAIN_PATH or
+                            otherState == INTERNAL_WAITING_FOR_NETWORK_CONFIRM;
+
+                        if( sameCommand or otherIsActive )
+                            treatAsBlocking = false;
+                    }
+                }
+
+                if( treatAsBlocking )
+                {
+                    result = true;
+                    *pCollisionData = chunkIntersections[ i ];
+                }
             }
         }
     }
@@ -1182,7 +1220,8 @@ MachPhys::FinalState MachLogMachineMotionSequencer::finalStateToAimFor(
 
         const MexDegrees angle = thisMovement.angleBetween( nextMovement );
 
-        const MexDegrees handbrakeTurnLimit = 45.0;
+        // Allow machines to keep some forward momentum through broader turns before forcing a stop.
+        const MexDegrees handbrakeTurnLimit = 100.0;
         if( fabs( angle.asScalar() ) > handbrakeTurnLimit.asScalar() )
             finalState = MachPhys::AT_REST;
 

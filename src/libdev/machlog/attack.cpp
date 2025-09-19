@@ -3,12 +3,15 @@
  * (c) Charybdis Limited, 1997. All Rights Reserved.
  */
 
+#include <algorithm>
 #include <iostream>
 #include "ctl/pvector.hpp"
 
 #include "mathex/cvexpgon.hpp"
+#include "mathex/epsilon.hpp"
 #include "mathex/line3d.hpp"
 #include "mathex/point2d.hpp"
+#include "mathex/vec2.hpp"
 
 #include "phys/cspace2.hpp"
 
@@ -1061,7 +1064,19 @@ PhysRelativeTime MachLogAttackOperation::calculateNewApproachPoint( const MexPoi
     //because if it's a construction the destination would be inside the construction's obstacle polygon.
 	MexPoint2d attackPoint;
 
-	bool foundSpace = MachLogSpacialManipulation::getNearestFreeSpacePoint( testTransform, desiredRange, useClearance, &attackPoint, extraSeparation, pattern );
+    bool foundSpace = MachLogSpacialManipulation::getNearestFreeSpacePoint( testTransform, desiredRange, useClearance, &attackPoint, extraSeparation, pattern );
+
+    if( not foundSpace )
+    {
+        // Try again with a slightly relaxed clearance so we keep flowing around other units.
+        MATHEX_SCALAR relaxedClearance = std::max( motSeq.lowClearance(), useClearance * 0.5 );
+        if( relaxedClearance < useClearance )
+        {
+            foundSpace = MachLogSpacialManipulation::getNearestFreeSpacePoint( testTransform, desiredRange, relaxedClearance, &attackPoint, extraSeparation, pattern );
+        }
+    }
+
+    bool advanced = false;
 
     if( foundSpace )
     {
@@ -1073,14 +1088,54 @@ PhysRelativeTime MachLogAttackOperation::calculateNewApproachPoint( const MexPoi
         //We might be in range before arriving, so limit the time we wait
         if( interval > 0.5 )
             interval = 0.5;
+
+        advanced = interval > 0;
     }
-    else
+
+    if( not advanced )
     {
-    	interval = 1.0;
+        // Fall back to stepping along the line of sight until we find a reachable point.
+        MexVec2 fromTargetToAttacker( targetPositionNow, attackerPositionNow );
+        if( not fromTargetToAttacker.isZeroVector() )
+        {
+            fromTargetToAttacker.makeUnitVector();
+
+            const MATHEX_SCALAR startRange = std::max( desiredRange, 5.0 );
+            const MATHEX_SCALAR maxRange = std::max( distanceToTargetNow, startRange );
+            const MATHEX_SCALAR step = std::max( motSeq.lowClearance(), 3.0 );
+
+            for( MATHEX_SCALAR travel = startRange; travel <= maxRange and not advanced; travel += step )
+            {
+                MexPoint2d candidate( targetPositionNow.x() + fromTargetToAttacker.x() * travel,
+                                      targetPositionNow.y() + fromTargetToAttacker.y() * travel );
+
+                if( attackerPositionNow.sqrEuclidianDistance( candidate ) < MexEpsilon::instance() )
+                    continue;
+
+                if( motSeq.canMoveTo( attackerPositionNow, candidate ) )
+                {
+                    if( groupMoveInfo().valid() )
+                        interval = motSeq.destination( candidate, groupMoveInfo() );
+                    else
+                        interval = motSeq.destination( candidate );
+
+                    if( interval > 0.5 )
+                        interval = 0.5;
+
+                    advanced = interval > 0;
+                }
+            }
+        }
+    }
+
+    if( not advanced )
+    {
+        // Try again very soon so that we keep searching for shooting space.
+        interval = 0.5;
     }
 
 
-	return interval;
+        return interval;
 }
 
 //static

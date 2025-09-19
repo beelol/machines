@@ -5,11 +5,32 @@ USER root
 # Passwordless sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# RUN apt-get update --fix-missing && \
+#     apt-get install -y \
+#         build-essential \
+#         file \
+#         apt-utils \
+#         cmake \
+#         cmake-curses-gui \
+#         mingw-w64 \
+#         libsdl2-dev \
+#         libsdl2-image-dev \
+#         libopenal-dev \
+#         libalure-dev \
+#         libenet-dev \
+#         libfreetype6-dev \
+#         libglew-dev \
+#         libglm-dev \
+#         libaudio-dev
+
+# Install build deps
 RUN apt-get update --fix-missing && \
     apt-get install -y \
         build-essential \
         file \
         apt-utils \
+        sudo \
+        git \
         cmake \
         cmake-curses-gui \
         mingw-w64 \
@@ -21,7 +42,8 @@ RUN apt-get update --fix-missing && \
         libfreetype6-dev \
         libglew-dev \
         libglm-dev \
-        libaudio-dev
+        libaudio-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 
 RUN useradd -ms /bin/bash dev

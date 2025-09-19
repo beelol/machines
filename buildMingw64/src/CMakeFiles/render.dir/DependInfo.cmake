@@ -1,0 +1,116 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/opt/dev/src/libdev/render/alphagrp.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/alphagrp.cpp.obj"
+  "/opt/dev/src/libdev/render/animcurs.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/animcurs.cpp.obj"
+  "/opt/dev/src/libdev/render/camera.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/camera.cpp.obj"
+  "/opt/dev/src/libdev/render/capable.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/capable.cpp.obj"
+  "/opt/dev/src/libdev/render/capablei.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/capablei.cpp.obj"
+  "/opt/dev/src/libdev/render/colmap.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/colmap.cpp.obj"
+  "/opt/dev/src/libdev/render/colour.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/colour.cpp.obj"
+  "/opt/dev/src/libdev/render/coplagrp.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/coplagrp.cpp.obj"
+  "/opt/dev/src/libdev/render/cursor2d.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/cursor2d.cpp.obj"
+  "/opt/dev/src/libdev/render/device.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/device.cpp.obj"
+  "/opt/dev/src/libdev/render/devicei.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/devicei.cpp.obj"
+  "/opt/dev/src/libdev/render/display.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/display.cpp.obj"
+  "/opt/dev/src/libdev/render/displayi.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/displayi.cpp.obj"
+  "/opt/dev/src/libdev/render/dlyspin.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/dlyspin.cpp.obj"
+  "/opt/dev/src/libdev/render/driv.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/driv.cpp.obj"
+  "/opt/dev/src/libdev/render/driver.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/driver.cpp.obj"
+  "/opt/dev/src/libdev/render/drivi.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/drivi.cpp.obj"
+  "/opt/dev/src/libdev/render/drivsel.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/drivsel.cpp.obj"
+  "/opt/dev/src/libdev/render/envirnmt.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/envirnmt.cpp.obj"
+  "/opt/dev/src/libdev/render/fixdcurs.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/fixdcurs.cpp.obj"
+  "/opt/dev/src/libdev/render/fixpt.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/fixpt.cpp.obj"
+  "/opt/dev/src/libdev/render/fixptvec.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/fixptvec.cpp.obj"
+  "/opt/dev/src/libdev/render/font.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/font.cpp.obj"
+  "/opt/dev/src/libdev/render/glmath.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/glmath.cpp.obj"
+  "/opt/dev/src/libdev/render/gxmeshload.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/gxmeshload.cpp.obj"
+  "/opt/dev/src/libdev/render/hierbuil.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/hierbuil.cpp.obj"
+  "/opt/dev/src/libdev/render/hierload.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/hierload.cpp.obj"
+  "/opt/dev/src/libdev/render/hsv.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/hsv.cpp.obj"
+  "/opt/dev/src/libdev/render/illumine.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/illumine.cpp.obj"
+  "/opt/dev/src/libdev/render/inlight.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/inlight.cpp.obj"
+  "/opt/dev/src/libdev/render/inpoints.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/inpoints.cpp.obj"
+  "/opt/dev/src/libdev/render/intmap.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/intmap.cpp.obj"
+  "/opt/dev/src/libdev/render/light.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/light.cpp.obj"
+  "/opt/dev/src/libdev/render/lightbuf.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/lightbuf.cpp.obj"
+  "/opt/dev/src/libdev/render/linediag.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/linediag.cpp.obj"
+  "/opt/dev/src/libdev/render/matapply.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/matapply.cpp.obj"
+  "/opt/dev/src/libdev/render/matbody.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/matbody.cpp.obj"
+  "/opt/dev/src/libdev/render/material.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/material.cpp.obj"
+  "/opt/dev/src/libdev/render/matmgr.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/matmgr.cpp.obj"
+  "/opt/dev/src/libdev/render/matvec.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/matvec.cpp.obj"
+  "/opt/dev/src/libdev/render/mesh.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/mesh.cpp.obj"
+  "/opt/dev/src/libdev/render/meshfact.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/meshfact.cpp.obj"
+  "/opt/dev/src/libdev/render/meshid.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/meshid.cpp.obj"
+  "/opt/dev/src/libdev/render/meshinst.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/meshinst.cpp.obj"
+  "/opt/dev/src/libdev/render/meshload.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/meshload.cpp.obj"
+  "/opt/dev/src/libdev/render/mmx.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/mmx.cpp.obj"
+  "/opt/dev/src/libdev/render/modeobsv.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/modeobsv.cpp.obj"
+  "/opt/dev/src/libdev/render/node.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/node.cpp.obj"
+  "/opt/dev/src/libdev/render/nonmmx.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/nonmmx.cpp.obj"
+  "/opt/dev/src/libdev/render/normmap.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/normmap.cpp.obj"
+  "/opt/dev/src/libdev/render/pixelfmt.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/pixelfmt.cpp.obj"
+  "/opt/dev/src/libdev/render/points.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/points.cpp.obj"
+  "/opt/dev/src/libdev/render/polysord.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/polysord.cpp.obj"
+  "/opt/dev/src/libdev/render/polysorp.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/polysorp.cpp.obj"
+  "/opt/dev/src/libdev/render/render.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/render.cpp.obj"
+  "/opt/dev/src/libdev/render/scale.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/scale.cpp.obj"
+  "/opt/dev/src/libdev/render/spinpoly.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/spinpoly.cpp.obj"
+  "/opt/dev/src/libdev/render/stars.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/stars.cpp.obj"
+  "/opt/dev/src/libdev/render/starsi.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/starsi.cpp.obj"
+  "/opt/dev/src/libdev/render/stats.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/stats.cpp.obj"
+  "/opt/dev/src/libdev/render/surface.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/surface.cpp.obj"
+  "/opt/dev/src/libdev/render/surfbody.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/surfbody.cpp.obj"
+  "/opt/dev/src/libdev/render/surfmgr.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/surfmgr.cpp.obj"
+  "/opt/dev/src/libdev/render/surfmgri.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/surfmgri.cpp.obj"
+  "/opt/dev/src/libdev/render/texbody.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/texbody.cpp.obj"
+  "/opt/dev/src/libdev/render/texset.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/texset.cpp.obj"
+  "/opt/dev/src/libdev/render/texseti.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/texseti.cpp.obj"
+  "/opt/dev/src/libdev/render/texture.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/texture.cpp.obj"
+  "/opt/dev/src/libdev/render/tlpoly.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/tlpoly.cpp.obj"
+  "/opt/dev/src/libdev/render/triangle.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/triangle.cpp.obj"
+  "/opt/dev/src/libdev/render/trigroup.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/trigroup.cpp.obj"
+  "/opt/dev/src/libdev/render/trilist.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/trilist.cpp.obj"
+  "/opt/dev/src/libdev/render/ttfpoly.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/ttfpoly.cpp.obj"
+  "/opt/dev/src/libdev/render/ttfpolyi.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/ttfpolyi.cpp.obj"
+  "/opt/dev/src/libdev/render/ttftris.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/ttftris.cpp.obj"
+  "/opt/dev/src/libdev/render/uvanim.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/uvanim.cpp.obj"
+  "/opt/dev/src/libdev/render/uvflip.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/uvflip.cpp.obj"
+  "/opt/dev/src/libdev/render/uvtrans.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/uvtrans.cpp.obj"
+  "/opt/dev/src/libdev/render/vertex.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/vertex.cpp.obj"
+  "/opt/dev/src/libdev/render/vpmap.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/vpmap.cpp.obj"
+  "/opt/dev/src/libdev/render/vtxdata.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/vtxdata.cpp.obj"
+  "/opt/dev/src/libdev/render/vtxmat.cpp" "/opt/dev/buildMingw64/src/CMakeFiles/render.dir/libdev/render/vtxmat.cpp.obj"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_CXX
+  "HAVE_DEMANGLE"
+  "NDEBUG"
+  "NOEXCEPT=noexcept"
+  "PRODUCTION"
+  )
+
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../src/../include/libdev"
+  "../src/../include/projects"
+  "../src/../external/libsmack"
+  "../src/../external"
+  "/usr/include/freetype2"
+  "../windows/include"
+  "../windows/include/AL"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

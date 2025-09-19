@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibaudio.a  CMakeFiles/libaudio.dir/__/external/audio/fileutil.c.obj CMakeFiles/libaudio.dir/__/external/audio/wave.c.obj
+/usr/bin/ranlib liblibaudio.a

@@ -1,0 +1,284 @@
+/usr/bin/cmake -H/opt/dev -B/opt/dev/buildMingw64 --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /opt/dev/buildMingw64/CMakeFiles /opt/dev/buildMingw64/CMakeFiles/progress.marks
+make -f CMakeFiles/Makefile2 all
+make[1]: Entering directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/sound.dir/build.make src/CMakeFiles/sound.dir/depend
+make -f src/CMakeFiles/machphys.dir/build.make src/CMakeFiles/machphys.dir/depend
+make -f src/CMakeFiles/machlog.dir/build.make src/CMakeFiles/machlog.dir/depend
+make -f src/CMakeFiles/libaudio.dir/build.make src/CMakeFiles/libaudio.dir/depend
+make -f src/CMakeFiles/recorder.dir/build.make src/CMakeFiles/recorder.dir/depend
+make -f src/CMakeFiles/gui.dir/build.make src/CMakeFiles/gui.dir/depend
+make -f src/CMakeFiles/sim.dir/build.make src/CMakeFiles/sim.dir/depend
+make -f src/CMakeFiles/afx.dir/build.make src/CMakeFiles/afx.dir/depend
+make -f src/CMakeFiles/device.dir/build.make src/CMakeFiles/device.dir/depend
+make -f src/CMakeFiles/ctl.dir/build.make src/CMakeFiles/ctl.dir/depend
+make -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/depend
+make -f src/CMakeFiles/utility.dir/build.make src/CMakeFiles/utility.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/libaudio.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/ctl.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/sound.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/recorder.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/afx.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/gui.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/network.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/utility.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/device.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/sim.dir/DependInfo.cmake --color=
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/libaudio.dir/build.make src/CMakeFiles/libaudio.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/ctl.dir/build.make src/CMakeFiles/ctl.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/libaudio.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/utility.dir/build.make src/CMakeFiles/utility.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[  0%] Built target libaudio
+make -f src/CMakeFiles/afx.dir/build.make src/CMakeFiles/afx.dir/build
+make -f src/CMakeFiles/base.dir/build.make src/CMakeFiles/base.dir/depend
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/sim.dir/build.make src/CMakeFiles/sim.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/network.dir/build.make src/CMakeFiles/network.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/sound.dir/build.make src/CMakeFiles/sound.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/ctl.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/recorder.dir/build.make src/CMakeFiles/recorder.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/base.dir/DependInfo.cmake --color=
+[  0%] Built target ctl
+make -f src/CMakeFiles/phys.dir/build.make src/CMakeFiles/phys.dir/depend
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/device.dir/build.make src/CMakeFiles/device.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/utility.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/phys.dir/DependInfo.cmake --color=
+[  0%] Built target utility
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/machlog.dir/DependInfo.cmake --color=
+make -f src/CMakeFiles/mathex.dir/build.make src/CMakeFiles/mathex.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/afx.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/sim.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/machphys.dir/DependInfo.cmake --color=
+[  0%] Built target afx
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/recorder.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/profiler.dir/build.make src/CMakeFiles/profiler.dir/depend
+make -f src/CMakeFiles/base.dir/build.make src/CMakeFiles/base.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/mathex.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/sound.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/network.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[  1%] Built target sim
+make -f src/CMakeFiles/world4d.dir/build.make src/CMakeFiles/world4d.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/profiler.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/device.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[  2%] Built target sound
+make -f src/CMakeFiles/gxin.dir/build.make src/CMakeFiles/gxin.dir/depend
+[  4%] Built target network
+make -f src/CMakeFiles/stdlib.dir/build.make src/CMakeFiles/stdlib.dir/depend
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/profiler.dir/build.make src/CMakeFiles/profiler.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/gui.dir/build.make src/CMakeFiles/gui.dir/build
+[  6%] Built target device
+make -f src/CMakeFiles/xin.dir/build.make src/CMakeFiles/xin.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/gxin.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/base.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/stdlib.dir/DependInfo.cmake --color=
+[  7%] Built target recorder
+make -f src/CMakeFiles/envirnmt.dir/build.make src/CMakeFiles/envirnmt.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/xin.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/world4d.dir/DependInfo.cmake --color=
+[ 10%] Built target base
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/stdlib.dir/build.make src/CMakeFiles/stdlib.dir/build
+make -f src/CMakeFiles/render.dir/build.make src/CMakeFiles/render.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/envirnmt.dir/DependInfo.cmake --color=
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/profiler.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/gxin.dir/build.make src/CMakeFiles/gxin.dir/build
+[ 10%] Built target profiler
+make -f src/CMakeFiles/system.dir/build.make src/CMakeFiles/system.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/stdlib.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/mathex.dir/build.make src/CMakeFiles/mathex.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/system.dir/DependInfo.cmake --color=
+[ 10%] Built target stdlib
+make -f src/CMakeFiles/libsmacker.dir/build.make src/CMakeFiles/libsmacker.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/gxin.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/envirnmt.dir/build.make src/CMakeFiles/envirnmt.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/phys.dir/build.make src/CMakeFiles/phys.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/libsmacker.dir/DependInfo.cmake --color=
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/xin.dir/build.make src/CMakeFiles/xin.dir/build
+[ 11%] Built target gxin
+make -f src/CMakeFiles/machgui.dir/build.make src/CMakeFiles/machgui.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/render.dir/DependInfo.cmake --color=
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/system.dir/build.make src/CMakeFiles/system.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/gui.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/libsmacker.dir/build.make src/CMakeFiles/libsmacker.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/xin.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/libsmacker.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 13%] Built target gui
+make -f src/CMakeFiles/ani.dir/build.make src/CMakeFiles/ani.dir/depend
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/mathex.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 14%] Built target xin
+[ 14%] Built target libsmacker
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/ani.dir/DependInfo.cmake --color=
+[ 17%] Built target mathex
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/ani.dir/build.make src/CMakeFiles/ani.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/phys.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/system.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/envirnmt.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 23%] Built target system
+[ 23%] Built target phys
+[ 23%] Built target envirnmt
+make[2]: Entering directory '/opt/dev/buildMingw64'
+cd /opt/dev/buildMingw64 && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /opt/dev /opt/dev/src /opt/dev/buildMingw64 /opt/dev/buildMingw64/src /opt/dev/buildMingw64/src/CMakeFiles/machgui.dir/DependInfo.cmake --color=
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/world4d.dir/build.make src/CMakeFiles/world4d.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/ani.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 23%] Built target ani
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/render.dir/build.make src/CMakeFiles/render.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/world4d.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 30%] Built target world4d
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/render.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 37%] Built target render
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/machphys.dir/build.make src/CMakeFiles/machphys.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/machlog.dir/build.make src/CMakeFiles/machlog.dir/build
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make -f src/CMakeFiles/machgui.dir/build.make src/CMakeFiles/machgui.dir/build
+make[2]: Entering directory '/opt/dev/buildMingw64'
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condbmus.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/attack.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/conddead.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condfire.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/attack.cpp.obj -c /opt/dev/src/libdev/machlog/attack.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condbmus.cpp.obj -c /opt/dev/src/libdev/machlog/condbmus.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/conddead.cpp.obj -c /opt/dev/src/libdev/machlog/conddead.cpp
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condnot.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condanya.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condflag.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condfire.cpp.obj -c /opt/dev/src/libdev/machlog/condfire.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condflag.cpp.obj -c /opt/dev/src/libdev/machlog/condflag.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condnot.cpp.obj -c /opt/dev/src/libdev/machlog/condnot.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condanya.cpp.obj -c /opt/dev/src/libdev/machlog/condanya.cpp
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condhuni.cpp.obj
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condpod.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condhuni.cpp.obj -c /opt/dev/src/libdev/machlog/condhuni.cpp
+[ 38%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condoded.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condoded.cpp.obj -c /opt/dev/src/libdev/machlog/condoded.cpp
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condpod.cpp.obj -c /opt/dev/src/libdev/machlog/condpod.cpp
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/machphys.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+make[2]: Entering directory '/opt/dev/buildMingw64'
+make[2]: Nothing to be done for 'src/CMakeFiles/machgui.dir/build'.
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+[ 60%] Built target machphys
+[ 70%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condreac.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condreac.cpp.obj -c /opt/dev/src/libdev/machlog/condreac.cpp
+[ 74%] Built target machgui
+[ 74%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condrese.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condrese.cpp.obj -c /opt/dev/src/libdev/machlog/condrese.cpp
+[ 74%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condtime.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condtime.cpp.obj -c /opt/dev/src/libdev/machlog/condtime.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condtrea.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condtrea.cpp.obj -c /opt/dev/src/libdev/machlog/condtrea.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condview.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condview.cpp.obj -c /opt/dev/src/libdev/machlog/condview.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condunit.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condunit.cpp.obj -c /opt/dev/src/libdev/machlog/condunit.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/condvort.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/condvort.cpp.obj -c /opt/dev/src/libdev/machlog/condvort.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/consitei.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/consitei.cpp.obj -c /opt/dev/src/libdev/machlog/consitei.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/consitem.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/consitem.cpp.obj -c /opt/dev/src/libdev/machlog/consitem.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/constree.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/constree.cpp.obj -c /opt/dev/src/libdev/machlog/constree.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/constrei.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/constrei.cpp.obj -c /opt/dev/src/libdev/machlog/constrei.cpp
+[ 75%] Building CXX object src/CMakeFiles/machlog.dir/libdev/machlog/constroi.cpp.obj
+cd /opt/dev/buildMingw64/src && /usr/bin/x86_64-w64-mingw32-g++-posix  -DHAVE_DEMANGLE -DNDEBUG -DNOEXCEPT=noexcept -DPRODUCTION @CMakeFiles/machlog.dir/includes_CXX.rsp -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2   -o CMakeFiles/machlog.dir/libdev/machlog/constroi.cpp.obj -c /opt/dev/src/libdev/machlog/constroi.cpp
+src/CMakeFiles/machlog.dir/build.make:716: recipe for target 'src/CMakeFiles/machlog.dir/libdev/machlog/attack.cpp.obj' failed
+make[2]: Leaving directory '/opt/dev/buildMingw64'
+CMakeFiles/Makefile2:263: recipe for target 'src/CMakeFiles/machlog.dir/all' failed
+make[1]: Leaving directory '/opt/dev/buildMingw64'
+Makefile:86: recipe for target 'all' failed

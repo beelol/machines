@@ -5,15 +5,20 @@ then
 fi
 
 IMAGE_NAME=machines-cpp-dev
-WORKDIR=/opt/dev
-MOUNTS="$(pwd):${WORKDIR}"
 
-DOCKER_CMD="docker run -it \
-            -v $MOUNTS \
-            -w ${WORKDIR} \
-            ${IMAGE_NAME} \
-            bash"
+# Use the project directory on the host as the working directory inside the
+# container.  This prevents CMake from hardcoding an inaccessible path (e.g.
+# /opt/dev) into its cache which would later break local builds once the
+# container exits.  Users can override the container path by setting the
+# CONTAINER_WORKDIR environment variable when invoking the script.
+HOST_WORKDIR="$(pwd)"
+CONTAINER_WORKDIR="${CONTAINER_WORKDIR:-${HOST_WORKDIR}}"
+MOUNTS="${HOST_WORKDIR}:${CONTAINER_WORKDIR}"
 
 set -e
 echo "Logging into docker shell"
-$DOCKER_CMD
+docker run -it \
+  -v "${MOUNTS}" \
+  -w "${CONTAINER_WORKDIR}" \
+  "${IMAGE_NAME}" \
+  bash

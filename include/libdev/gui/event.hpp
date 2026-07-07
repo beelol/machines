@@ -86,9 +86,9 @@ public:
 		
 	///////////////////////////////
 
-	GuiEventBase::isAltPressed;
-	GuiEventBase::isCtrlPressed;
-	GuiEventBase::isShiftPressed;
+	using GuiEventBase::isAltPressed;
+	using GuiEventBase::isCtrlPressed;
+	using GuiEventBase::isShiftPressed;
 	
 	///////////////////////////////
 
@@ -122,9 +122,9 @@ public:
 	
 	///////////////////////////////
 
-	GuiEventBase::isAltPressed;
-	GuiEventBase::isCtrlPressed;
-	GuiEventBase::isShiftPressed;
+	using GuiEventBase::isAltPressed;
+	using GuiEventBase::isCtrlPressed;
+	using GuiEventBase::isShiftPressed;
 	
 	///////////////////////////////
 

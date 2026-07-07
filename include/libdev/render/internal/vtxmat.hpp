@@ -54,8 +54,8 @@ public:
 	void insert(Ren::VertexIdx i, RenMaterial newValue);	// POST(contains(i));
 	void erase(Ren::VertexIdx i);							// POST(!contains(i));
 
-	ctl_vector<RenIVtxMaterial>::begin;
-	ctl_vector<RenIVtxMaterial>::end;
+	using ctl_vector<RenIVtxMaterial>::begin;
+	using ctl_vector<RenIVtxMaterial>::end;
 
     PER_MEMBER_PERSISTENT( RenIVertexMaterials );
     PER_FRIEND_READ_WRITE( RenIVertexMaterials );

@@ -124,7 +124,7 @@ public:
 		PRE( isInRange( value ) );
 	}
 
-	Base::operator value_type;
+	using Base::operator value_type;
 
 	UtlIntSubrange& operator =( value_type newValue )
 	{

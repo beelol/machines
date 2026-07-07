@@ -1,0 +1,22 @@
+# Build directories
+/build/
+/buildMacOS/
+/buildMacOSDebug/
+/buildMingw64/
+/buildMingw32/
+
+# Original game assets (copyrighted "digital download" content — not source)
+/machines-game-data/
+
+# Runtime-generated files
+/config.xml
+/assert.log
+/machlog.log
+/profiler.dat
+*.log
+
+# Local stand-in asset copied from system fonts
+/gui/Arial.ttf
+
+# macOS
+.DS_Store

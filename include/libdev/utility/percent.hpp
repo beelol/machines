@@ -20,12 +20,12 @@ public:
 		Base::value(value);
 	}
     
-	Base::operator const Value&;
-	Base::value;
-	Base::range;
+	using Base::operator const Value&;
+	using Base::value;
+	using Base::range;
 
-	Base::isValid;
-	Base::length;
+	using Base::isValid;
+	using Base::length;
 };
 
 //////////////////////////////////////////////////////////////////////

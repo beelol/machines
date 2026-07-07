@@ -207,10 +207,17 @@ bool RenDisplay::useMode(const RenDisplay::Mode& m)
         SDL_SetWindowSize( window(), m.width(), m.height());
         SDL_SetWindowPosition(window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
     }
-    glViewport(0,0, m.width(), m.height());
-	SDL_Delay(100); // TODO: Without it there seems to be a issue with small viewport/ glFlush
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // These GL calls are only valid once a context exists and is current. On
+    // the first useMode() (during startup) the RenDevice GL context has not
+    // been created yet; calling into GL then hard-crashes on macOS (it was
+    // silently ignored on some Linux drivers). Guard until a context is current.
+    if (SDL_GL_GetCurrentContext() != NULL)
+    {
+        glViewport(0,0, m.width(), m.height());
+        SDL_Delay(100); // TODO: Without it there seems to be a issue with small viewport/ glFlush
+        glClearColor(0, 0, 0, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
     SDL_ShowWindow(window());
 
     if( !success or	( not pImpl_->modeChanged( ) ) )
@@ -248,11 +255,12 @@ bool RenDisplay::useMode(int width, int height, int refresh)
 	const Mode newMode(width, height, refresh);
 	ctl_list<Mode>::const_iterator it = find(modeList_.begin(), modeList_.end(), newMode);
 
-	// Can't use it if it's not in the list.
+	// If the requested resolution isn't one the display enumerates (common on
+	// macOS / HiDPI screens, which don't advertise legacy modes like 640x480),
+	// use the requested size directly. Any size is valid for a windowed context.
 	if (it == modeList_.end())
-		return false;
+		return useMode(newMode);
 
-	//return useMode(newMode);
 	return useMode(*it);
 }
 

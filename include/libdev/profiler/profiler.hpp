@@ -14,6 +14,10 @@
 
 #include "base/base.hpp"
 
+#ifdef __APPLE__
+#include <pthread.h>
+#endif
+
 class BaseLogBuffer;
 
 //TODO: handle timer
@@ -133,7 +137,11 @@ private:
     bool isBufferingOutput_;
     BaseLogBuffer* pMemoryBuffer_;
     bool crashOnPrint_; //true if a crash should be induced on call from EPI/PRO to print the stack
+#ifdef __APPLE__
+    pthread_t threadId;
+#else
     long unsigned int threadId;
+#endif
 };
 
 

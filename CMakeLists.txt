@@ -3,7 +3,7 @@
 # Contains global options and definitions
 ##
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
 project(machines C CXX)
 include(CheckCXXCompilerFlag)
@@ -52,6 +52,13 @@ elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
     # Platform-dependent implementation of system.h
     #set(SYSTEM_CPP_MODULE "system_linux.cpp")
     #set(SYSTEM_H_MODULE "system_linux.h")
+elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
+    message(STATUS "Build for macOS system")
+    set(PLATFORM_WINDOWS 0)
+    set(PLATFORM_LINUX   0)
+    set(PLATFORM_GNU     1)
+    set(PLATFORM_MACOSX  1)
+    set(PLATFORM_OTHER   0)
 else()
     message(STATUS "Build for other system")
     set(PLATFORM_WINDOWS 0)
@@ -121,8 +128,16 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
     message(STATUS "Detected Clang version 3.1+")
 
-    set(NORMAL_CXX_FLAGS "-std=c++11 ${MACHINES_COMPILER_BIT_MODE} -Wall -Werror -Wold-style-cast -pedantic-errors -Wmissing-prototypes")
-    set(NORMAL_CXX_FLAGS "${NORMAL_CXX_FLAGS} -Wno-error=deprecated-declarations") # updated version of physfs is not available on some platforms so we keep using deprecated functions, see #958
+    if(PLATFORM_MACOSX)
+        # This 25-year-old codebase does not compile clean under a modern clang's
+        # strict/pedantic modes, so keep warnings non-fatal on macOS.
+        set(NORMAL_CXX_FLAGS "-std=gnu++11 -Wall -Wno-deprecated-declarations -Wno-old-style-cast")
+        set(NORMAL_CXX_FLAGS "${NORMAL_CXX_FLAGS} -Wno-inconsistent-missing-override -Wno-format -Wno-writable-strings")
+        set(NORMAL_C_FLAGS "-Wall -Wno-deprecated-declarations")
+    else()
+        set(NORMAL_CXX_FLAGS "-std=c++11 ${MACHINES_COMPILER_BIT_MODE} -Wall -Werror -Wold-style-cast -pedantic-errors -Wmissing-prototypes")
+        set(NORMAL_CXX_FLAGS "${NORMAL_CXX_FLAGS} -Wno-error=deprecated-declarations") # updated version of physfs is not available on some platforms so we keep using deprecated functions, see #958
+    endif()
     set(RELEASE_CXX_FLAGS "-O2")
     set(DEBUG_CXX_FLAGS "-g -O0")
     set(TEST_CXX_FLAGS "-pthread")
@@ -177,9 +192,15 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenAL REQUIRED)
-find_package(Alure REQUIRED)
+if(NOT PLATFORM_MACOSX)
+    # Alure (the ogg music streaming helper) is not available on macOS.
+    find_package(Alure REQUIRED)
+endif()
 find_package(ENet REQUIRED)
 find_package(Freetype REQUIRED)
+
+# glm is header-only; locate its include directory (e.g. Homebrew keg on macOS).
+find_path(GLM_INCLUDE_DIR glm/glm.hpp)
 
 
 if(NOT DEV_BUILD)

@@ -14,10 +14,9 @@
 #include "base/internal/istrimpl.hpp"
 
 PerIstream::PerIstream( istream& istr )
-: pImpl_( _NEW( PerIstreamImpl( this ) ) ),
+: istream( istr.rdbuf() ),
+  pImpl_( _NEW( PerIstreamImpl( this ) ) ),
   istr_( istr )
-  //istream( istr )
-   //istream( pImpl_->pBuffer_ )
 {
     istream& base = *this;
 
@@ -30,7 +29,8 @@ PerIstream::PerIstream( istream& istr )
 }
 
 PerIstream::PerIstream( istream& istr, PerIstreamReporter* pReporter )
-: pImpl_( _NEW( PerIstreamImpl( this, istr, pReporter ) ) ),
+: istream( istr.rdbuf() ),
+  pImpl_( _NEW( PerIstreamImpl( this, istr, pReporter ) ) ),
   istr_( istr )
 {
     PRE( pReporter != NULL );

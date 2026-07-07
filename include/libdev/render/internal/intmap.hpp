@@ -51,8 +51,8 @@ public:
 	// POST(implies(newValue!=1,  contains(i)));
 	void value(Ren::VertexIdx i, MATHEX_SCALAR newValue);
 
-	ctl_vector<RenIVtxIntensity>::begin;
-	ctl_vector<RenIVtxIntensity>::end;
+	using ctl_vector<RenIVtxIntensity>::begin;
+	using ctl_vector<RenIVtxIntensity>::end;
 
     void CLASS_INVARIANT;
 

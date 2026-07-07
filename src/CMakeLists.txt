@@ -234,8 +234,12 @@ set(LOCAL_INCLUDES
 
 set(SYSTEM_INCLUDES
     /usr/include/freetype2
+    ${FREETYPE_INCLUDE_DIRS}
+    ${GLM_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIR}
+    ${SDL2_INCLUDE_DIR}/SDL2
     ${SDL2_IMAGE_INCLUDE_DIR}
+    ${SDL2_IMAGE_INCLUDE_DIR}/SDL2
     ${GLEW_INCLUDE_PATH}
     ${LIBSNDFILE_INCLUDE_DIR}
     ${ALURE_INCLUDE_DIR}
@@ -324,17 +328,34 @@ target_sources(libs_mach_gui
 
 add_executable(machines ${MACHINES_SOURCES})
 add_executable(planeted ${PLANETED_SOURCES})
-set_target_properties(machines planeted PROPERTIES LINK_FLAGS_RELEASE -s)
-set_target_properties(machines planeted PROPERTIES 
-    COMPILE_FLAGS "${MACHINES_COMPILER_BIT_MODE}" LINK_FLAGS "${MACHINES_COMPILER_BIT_MODE}"
-)
 
-target_link_libraries(machines -static-libgcc -static-libstdc++)
-target_link_libraries(planeted -static-libgcc -static-libstdc++)
-target_link_libraries(machines libs libs_mach_gui libaudio ${LIBS} )
-target_link_libraries(planeted libs libaudio ${LIBS} )
+if(PLATFORM_MACOSX)
+    # macOS: no GNU strip/static-libgcc flags; pull in the frameworks SDL/GL need.
+    set_target_properties(machines planeted PROPERTIES
+        COMPILE_FLAGS "${MACHINES_COMPILER_BIT_MODE}" LINK_FLAGS "${MACHINES_COMPILER_BIT_MODE}"
+    )
 
-target_link_libraries (machines -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
-target_link_libraries (planeted -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
+    target_link_libraries(machines libs libs_mach_gui libaudio ${LIBS} )
+    target_link_libraries(planeted libs libaudio ${LIBS} )
+
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    target_link_libraries(machines ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREFOUNDATION_LIBRARY})
+    target_link_libraries(planeted ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREFOUNDATION_LIBRARY})
+else()
+    set_target_properties(machines planeted PROPERTIES LINK_FLAGS_RELEASE -s)
+    set_target_properties(machines planeted PROPERTIES
+        COMPILE_FLAGS "${MACHINES_COMPILER_BIT_MODE}" LINK_FLAGS "${MACHINES_COMPILER_BIT_MODE}"
+    )
+
+    target_link_libraries(machines -static-libgcc -static-libstdc++)
+    target_link_libraries(planeted -static-libgcc -static-libstdc++)
+    target_link_libraries(machines libs libs_mach_gui libaudio ${LIBS} )
+    target_link_libraries(planeted libs libaudio ${LIBS} )
+
+    target_link_libraries (machines -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
+    target_link_libraries (planeted -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic)
+endif()
 
 

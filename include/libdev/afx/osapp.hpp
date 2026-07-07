@@ -54,7 +54,7 @@ class AfxOSSpecificApp :
         protected AfxSingletonApp<DERIVED_APP>            // prevent casting to this type
 {
 public:
-        AfxSingletonApp<DERIVED_APP>::instance;
+        using AfxSingletonApp<DERIVED_APP>::instance;
 };
 
 #endif /* _FRAMEWORK_OSAPP_INCLUDED */

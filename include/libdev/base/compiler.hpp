@@ -75,7 +75,8 @@
 #endif  /*  #ifdef __WATCOMC__  */
 
 #ifdef __GNUC__
-    #if __GNUC__ >= 5
+    #if defined(__clang__) || __GNUC__ >= 5
+        // Clang (incl. AppleClang) reports __GNUC__ == 4 but is fine here.
         //#include "base/watc1060.hpp"
         #define _COMPILER_VERSION
     #endif

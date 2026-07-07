@@ -408,10 +408,12 @@ private:
         MATHEX_SCALAR askerClearance
     );
 
+public:
     //True if the clearance surrounding the line joining fromPoint to toPoint is
     //clear in the config space. Client must disable any resting/moving polygon
     //before calling to avoid a clash.
     bool canMoveTo( const MexPoint2d fromPoint, const MexPoint2d toPoint );
+private:
 
     MachPhysMachine& physMachine();
 	const MachPhysMachine& physMachine() const;

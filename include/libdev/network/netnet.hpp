@@ -69,6 +69,8 @@ public:
         bool                                    hasAppSession( NetAppSessionUid ) const;
         void                                    update();
         void                                    pollMessages();
+        //Flush queued outgoing packets to the wire immediately (see NetINetwork::flush).
+        void                                    flush();
         const Sessions&                 sessions() const;
         //If hosting conventional game then use createAppSession
         NetAppSession*                  createAppSession( const NetAppSessionName& );

@@ -264,7 +264,10 @@ bool SysPathName::isAbsolute( void ) const
 
     PRE( set() );
 
-    PRE_INFO( *this );
+    // Log the raw path string, NOT *this: streaming a SysPathName routes back
+    // through pathname()->isRelative()->isAbsolute(), so PRE_INFO(*this) here
+    // would infinitely recurse (stack overflow) whenever a path assert fires.
+    PRE_INFO( pathname_ );
 
     bool    result = false;
 
@@ -283,7 +286,9 @@ bool SysPathName::isRelative( void ) const
 
     PRE( set() );
 
-    PRE_INFO( *this );
+    // Raw string, not *this — see isAbsolute(): avoids infinite recursion
+    // through operator<</pathname() when a path assertion is logged.
+    PRE_INFO( pathname_ );
 
     return not isAbsolute();
 }

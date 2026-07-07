@@ -298,6 +298,11 @@ void MachLogNetwork::update()
 	//NETWORK_STREAM( "MLNetwork::update has broker cached messages? " << broker.hasCachedOutgoingMessages() << std::endl );
 		if( isNetworkGame_ and broker.hasCachedOutgoingMessages() )
 			broker.sendCachedOutgoingMessages();
+
+		//Push everything queued this pump out to the wire now, so orders don't sit in
+		//ENet's outgoing queue until the next frame's poll.
+		if( isNetworkGame_ )
+			NetNetwork::instance().flush();
 	}
 
 	if( isNetworkGame_ )

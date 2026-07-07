@@ -79,6 +79,10 @@ public:
 	NetAppSession& 					session();
 	void 							update();
 	void 							pollMessages();
+	//Push any queued outgoing packets onto the wire immediately, rather than
+	//waiting for the next enet_host_service call in pollMessages (which would add
+	//up to a frame of send latency).
+	void 							flush();
 	const NetNetwork::Sessions& 	sessions() const;
 
 	bool							isValid() const;

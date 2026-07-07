@@ -21,6 +21,7 @@
 #include "mathex/sausag2d.hpp"
 #include "mathex/abox3d.hpp"
 #include "mathex/random.hpp"
+#include "machphys/random.hpp"
 #include "phys/cspace2.hpp"
 #include "phys/cs2qwrit.hpp"
 #include "phys/phys.hpp"
@@ -1691,9 +1692,9 @@ void MachLogMachineMotionSequencer::getOnPortalPoint()
         //  portal points getting clogged
         MexPoint2d nearbyPoint;
 
-        MexBasicRandom r;
-        r.seedFromTime();
-        const MATHEX_SCALAR radius = mexRandomScalar( &r, 0.0, useClearance_ * 10.0 );
+        //Use the shared gameplay stream, not a wall-clock-seeded local RNG, so this is
+        //deterministic and portable (was a per-machine, non-replayable divergence source).
+        const MATHEX_SCALAR radius = MachPhysRandom::randomDouble( 0.0, useClearance_ * 10.0 );
 
         if( pConfigSpace_->findSpace( onPortalPoint_, useClearance_,
           radius, obstacleFlags(), &nearbyPoint ) )
@@ -3113,11 +3114,10 @@ bool MachLogMachineMotionSequencer::findAvoidancePoint
     do
     {
         // A small random element should stop us
-        // getting stuck in the same pattern forever.
-        MexBasicRandom r = MexBasicRandom::constructSeededFromTime();
-
+        // getting stuck in the same pattern forever. Drawn from the shared gameplay stream
+        // for determinism/portability rather than a wall-clock-seeded local RNG.
         moveDirection += MexVec2(
-          mexRandomScalar( &r, -1.0, 1.0 ), mexRandomScalar( &r, -1.0, 1.0 ) );
+          MachPhysRandom::randomDouble( -1.0, 1.0 ), MachPhysRandom::randomDouble( -1.0, 1.0 ) );
     } while( moveDirection.isZeroVector() );
 
     moveDirection.makeUnitVector();

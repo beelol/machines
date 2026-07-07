@@ -46,7 +46,8 @@ int MexBasicRandom::upperLimit()
 
 void    MexBasicRandom::seed( ulong newSeed )
 {
-    state_ = newSeed;
+    //Truncate to the fixed 32-bit state width (deterministic across platforms).
+    state_ = _STATIC_CAST( uint32, newSeed );
     seed_ = state_;
 }
 
@@ -63,7 +64,7 @@ void    MexBasicRandom::seedFromTime()
             RecRecorderPrivate::instance().recordRandomSeed( result );
     }
 
-    state_ = result;
+    state_ = _STATIC_CAST( uint32, result );
     seed_ = state_;
 }
 

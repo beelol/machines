@@ -22,7 +22,7 @@ MachGuiIDatabase::MachGuiIDatabase()
     pCurrentDbScenario_( NULL )
 {
     campaignSystems_.reserve( 20 );
-    skirmishSystems_.reserve( 3 );
+    skirmishSystems_.reserve( 4 );
     multiPlayerSystems_.reserve( 3 );
     players_.reserve( 20 );
     savedGames_.reserve( 64 );

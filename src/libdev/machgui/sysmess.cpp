@@ -97,7 +97,7 @@ bool	MachGuiSystemMessageHandler::handleHostMessage()
 		NETWORK_STREAM("MachGuiStartupScreens::CTX_MULTI_GAME\n" );
         MachLogNetwork::instance().isNodeLogicalHost( true );
 		MachLogRaces& races = MachLogRaces::instance();
-		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		{
 			if( races.raceInGame( i ) and races.controller( i ).type() == MachLogController::AI_CONTROLLER )
 			{

@@ -104,7 +104,7 @@ MachLogRaces::MachLogRaces()
 	pDataImpl_->pGameCreationData_ = NULL;
 	pDataImpl_->scores_.reserve( MachPhys::N_RACES );
 	MachLogScore* pScore = NULL;
-	for( MachPhys::Race r = MachPhys::RED; r < MachPhys::N_RACES; ++((int&)r) )
+	for( MachPhys::Race r = MachPhys::RED; r < MachPhys::N_RACES; r = static_cast<decltype(r)>(r + 1) )
 	{
 		pDataImpl_->scores_.push_back( pScore );
 
@@ -116,7 +116,7 @@ MachLogRaces::MachLogRaces()
    		pDataImpl_->squadrons_[ r ].reserve( 20 );
 
 		// set race contact flag to true (trivially) for your own race, false for all others
-		for( MachPhys::Race rOther = MachPhys::RED; rOther < MachPhys::N_RACES; ++((int&)rOther) )
+		for( MachPhys::Race rOther = MachPhys::RED; rOther < MachPhys::N_RACES; rOther = static_cast<decltype(rOther)>(rOther + 1) )
 		{
 			if( r == rOther )
 				pDataImpl_->contactBetweenRaces_[ r ] [ rOther ] = true;
@@ -1076,7 +1076,7 @@ bool MachLogRaces::findTargetClosestTo( const MachActor& actor,
 	//if the targetresource flag is set then only try mines+smelters+carriers
 	if( targetResource )
 	{
-		for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+		for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 		{
 			MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 
@@ -1134,7 +1134,7 @@ bool MachLogRaces::findTargetClosestTo( const MachActor& actor,
 	else if( actor.objectIsMissileEmplacement() )
 		sqrScannerRange = sqr( actor.asMissileEmplacement().scannerRange() );
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 
@@ -1479,7 +1479,7 @@ bool MachLogRaces::findFriendlyClosestTo( const MachActor& actor,
 	if( targetSystemType == MachLog::TARGET_OBJECT )
 		targetObject = true;
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 
@@ -1619,7 +1619,7 @@ int MachLogRaces::findSafestFriendly( const MachActor& actor,
 	int bestMilitaryStrength = 0;
 	MexPoint3d pos = actor.position();
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 
@@ -1728,7 +1728,7 @@ void MachLogRaces::allFriendlyAggressiveMachinesWithinRange( const MachActor* pA
 
 	// note that the requirement that distance > sqrMinRange rules out possibility of adding yourself to the vector
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( pActor->race(), ridx );
 
@@ -1765,7 +1765,7 @@ void MachLogRaces::allFriendlyAggressivesWithinRange( const MachActor* pActor, M
 
 	// note that the requirement that distance > sqrMinRange rules out possibility of adding yourself to the vector
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( pActor->race(), ridx );
 
@@ -1894,7 +1894,7 @@ bool MachLogRaces::findFriendlyGarrisonClosestTo( const MachLogMachine& machine,
  		pGarrisonImInside = &( machine.insideWhichBuilding().asGarrison() );
  	}
 
- 	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+ 	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
  	{
  		MachLogRaces::DispositionToRace disp = dispositionToRace( machine.race(), ridx );
  		if( disp == MachLogRaces::ALLY or
@@ -2329,7 +2329,7 @@ bool MachLogRaces::loadPlanet( W4dSceneManager* pSceneManager, const string& pla
 
 	// Setup default camera location/type for each race. This can be overridden by
 	// specifying a camera position in the scenario file.
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		pDataImpl_->cameraInfo_[ ridx ].position_ = MexTransform3d( MexEulerAngles( MexDegrees( 111 ), 0.0, 0.0 ), MexPoint3d( 150.0, 150.0, 1.5 ) );
 		pDataImpl_->cameraInfo_[ ridx ].type_ = MachLogCamera::GROUND;
@@ -2508,7 +2508,7 @@ bool MachLogRaces::saveGame( const SysPathName& pathname, MachLogLoadSaveGameExt
 	if( getenv("CB_GENERATE_SCENARIO_ENTRIES") )
 	{
 		std::ofstream o("temp.scn");
-		for( MachPhys::Race r = MachPhys::RED; r < MachPhys::N_RACES; ++((int&)r) )
+		for( MachPhys::Race r = MachPhys::RED; r < MachPhys::N_RACES; r = static_cast<decltype(r)>(r + 1) )
 		{
 			if( raceInGame( r ) )
 			{
@@ -2592,7 +2592,7 @@ void MachLogRaces::initialise()
 	pDataImpl_->inSpecialActorUpdate_ = false;
 
     //Initialise the statistics
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		pDataImpl_->nMachines_[ i ] = 0;
 		pDataImpl_->nConstructions_[ i ] = 0;
@@ -2983,7 +2983,7 @@ bool MachLogRaces::findAlternativeTargetClosestTo( const MachActor& actor,
 	else if( actor.objectIsMissileEmplacement() )
 		sqrScannerRange = sqr( actor.asMissileEmplacement().scannerRange() );
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 
@@ -3523,7 +3523,7 @@ bool MachLogRaces::findMostValuableTarget( 	const MachActor& actor,
 	if( targetSystemType == MachLog::TARGET_NORMAL
 		or targetSystemType == MachLog::FAVOUR_STATIC_TARGETS )
 	{
-		for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+		for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 		{
 			MachLogRaces::DispositionToRace disp = dispositionToRace( actor.race(), ridx );
 			if( disp != MachLogRaces::ALLY and
@@ -3687,12 +3687,12 @@ void MachLogRaces::scoreShouldBeDisplayed( MachPhys::Race race, bool value )
 
 void MachLogRaces::removeNotDisplayedScores()
 {
-	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		if( not pDataImpl_->scores_[ i ]->scoreShouldBeDisplayed() )
 		{
 			pDataImpl_->scores_[i]->resetNumbers();
-			for( MachPhys::Race j = MachPhys::RED; j != MachPhys::N_RACES; ++((int&)j) )
+			for( MachPhys::Race j = MachPhys::RED; j != MachPhys::N_RACES; j = static_cast<decltype(j)>(j + 1) )
 			{
 				pDataImpl_->scores_[j]->resetPartialNumbers( j );
 			}

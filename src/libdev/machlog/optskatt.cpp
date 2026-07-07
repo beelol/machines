@@ -501,8 +501,8 @@ bool MachLogTaskAttackOperation::checkAllCloseEnoughAndDoAssemble()
 			assemblyPoint_ = 0;
 		else
 		{
-			MexBasicRandom random = MexBasicRandom::constructSeededFromTime();
-			assemblyPoint_ = mexRandomInt( &random, 0, (int)points.size() );
+			//Shared gameplay stream instead of a wall-clock-seeded local RNG (determinism).
+			assemblyPoint_ = MachPhysRandom::randomInt( 0, (int)points.size() );
 		}
 	}
 

@@ -164,7 +164,7 @@ void MachLogScenario::load
     useData.reserve( MachPhys::N_RACES );
 
 	//all defaults to not defined.
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		MachLogGameCreationData::PlayerCreationData data;
 		data.colour_ = i;
@@ -199,7 +199,7 @@ void MachLogScenario::load
 
 	}
 
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		if( useCreationData )
 		{
@@ -219,7 +219,7 @@ void MachLogScenario::load
 		//first things first set up an array of booleans as a short hand for which races have been marked as used
 		bool gotRace[ MachPhys::N_RACES ] = { false, false, false, false };
 		bool usedRace[ MachPhys::N_RACES ] = { false, false, false, false };
-		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		{
 			if( defaultData[i].type_ != MachLog::NOT_DEFINED )
 				gotRace[i] = true;
@@ -228,16 +228,16 @@ void MachLogScenario::load
 //		if( randomStarts == MachLog::FIXED_START_LOCATIONS )
 		{
 			//go through each of the races and mark which ones we have matches for already
-			for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+			for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 				if( useData[i].type_ != MachLog::NOT_DEFINED and
 					gotRace[i] )
 					usedRace[i] = true;
 			//now go through each of the races and see if a useData does not have usedRace marked.
-			for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+			for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 				if( useData[i].type_ != MachLog::NOT_DEFINED and not usedRace[i] )
 				{
 					//we need to allocate this useData element to a race which has been defined by the scenario file
-					for( MachPhys::Race j = MachPhys::RED; j < MachPhys::N_RACES; ++((int&)j) )
+					for( MachPhys::Race j = MachPhys::RED; j < MachPhys::N_RACES; j = static_cast<decltype(j)>(j + 1) )
 					{
 						//match to first unused race.
 						if( not usedRace[j] )
@@ -256,7 +256,7 @@ void MachLogScenario::load
 	}
 
 	HAL_STREAM("MachLogScneario::Load useData after processing\n" );
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		HAL_STREAM("MachLogScenario::Load useData element " << i << " " << useData[i] << std::endl );
 	}
@@ -898,7 +898,7 @@ void MachLogScenario::load
 		if( gameData.victoryCondition() == MachLog::VICTORY_POD )
 		{
 			doCreate = false;
-			for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; ++((int&)i) )
+			for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 			{
 				if( races.raceInGame( i ) and races.pods( i ).size() > 0 )
 					doCreate = true;
@@ -916,7 +916,7 @@ void MachLogScenario::load
 		MachLogActions::createDynamically( MachLog::VICTORY_ANNIHILATION, 0 );
 	}
 
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		if( not doneRace[i] )
 			MachLogNetwork::instance().ready( i, true );
 
@@ -1004,7 +1004,7 @@ void MachLogScenario::load
 				HAL_STREAM(" found a machine Token " << type << " sub " << subType << " hw " << hwLevel << " wc " << wc << " researched " << researched << std::endl );
 				MachLogResearchItem& ri = races.researchTree().researchItem( type, subType, hwLevel, wc );
 				HAL_STREAM(" ri objectTYpe " << ri.objectType() << " ri.sub " << ri.subType() << " ri.hwLevel " << ri.hwLevel() << " ri.wc " << ri.weaponCombo() << std::endl );
-				for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+				for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 				{
 					bool doWork = false;
 					doWork = false;
@@ -1539,7 +1539,7 @@ void MachLogScenario::parseRestrictConstruction( const UtlLineTokeniser& parser 
 	}
 
 	MachLogConstructionItem& consItem = races.constructionTree().constructionItem( (MachPhys::ConstructionType)type, subType, hwLevel, weaponCombo );
-	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		bool doWork = false;
 		doWork = false;

@@ -128,56 +128,13 @@ void BaseAssertion::assertFileExists( const char* fileName, const char* file, co
 
 bool BaseAssertion::validFileName( const char* fileName )
 {
-    bool    result = true;
-    size_t  charCount = 0;
-
-    const   size_t  MAX_DIRECTORY_COUNT = 8;
-    const   size_t  MAX_EXTENSION_COUNT = 3;
-
-    size_t  maxCount = MAX_DIRECTORY_COUNT;
-
-    for( size_t i = 0; i < strlen( fileName ) && result; ++i )
-    {
-        switch( fileName[ i ] )
-        {
-            case ':':
-                //  We have had a drive name up to here - a drive name can only be one letter
-                if( charCount > 1 )
-                    result = false;
-                charCount = 0;
-                break;
-
-            case '\\':
-            case '/':
-                charCount = 0;
-                maxCount = MAX_DIRECTORY_COUNT;
-                break;
-
-            case '.':
-                if( fileName[ i + 1 ] != '\0' )
-                {
-                    //  Is this dot an indication of the current or parent
-                    //  directory, or is it introducing an extension?
-
-                    if( fileName[ i + 1 ] != '.' and
-                      fileName[ i + 1 ] != '/' and
-                      fileName[ i + 1 ] != '\\' )
-                    {
-                        //  Not a directory specifier, switch in the extension count
-                        charCount = 0;
-                        maxCount = MAX_EXTENSION_COUNT;
-                    }
-                }
-                break;
-
-            default:
-                if( ++charCount > maxCount )
-                    result = false;
-                break;
-        }
-    }
-
-    return result;
+    //  Historically this enforced DOS 8.3 naming (<=8 chars per directory
+    //  component, <=3 per extension). That rejects modern paths - e.g. any
+    //  component longer than 8 chars such as "machines-game-data" or long
+    //  absolute macOS paths - so ASSERT_FILE_EXISTS reported valid files as
+    //  "File name invalid". The subsequent ifstream open already validates the
+    //  path against the real filesystem, so just require a non-empty name.
+    return fileName != NULL and fileName[ 0 ] != '\0';
 }
 
 //////////////////////////////////////////////////////////////////////////////////

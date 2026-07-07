@@ -142,7 +142,7 @@ void MachLogMineralSite::setOre( MachPhys::BuildingMaterialUnits amountOfOre )
 
 			bool pcPlayerHadMineUsingThis = false;
 
-			for( MachPhys::Race race = MachPhys::RED; race != MachPhys::N_RACES; ++((int&)race) )
+			for( MachPhys::Race race = MachPhys::RED; race != MachPhys::N_RACES; race = static_cast<decltype(race)>(race + 1) )
 			{
 				const MachLogRaces::Mines& mines = MachLogRaces::instance().mines( race );
 				if( mines.size() > 0 )

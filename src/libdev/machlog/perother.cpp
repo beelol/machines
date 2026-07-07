@@ -95,7 +95,7 @@ void MachLogOtherPersistence::setUpLocalVectorFromViews() const
 		}
 	}
 
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		if( MachLogRaces::instance().raceObjects( i ).size() > 0 )
 			for( MachLogRaces::Squadrons::iterator j = MachLogRaces::instance().squadrons( i ).begin(); j != MachLogRaces::instance().squadrons( i ).end(); ++j )

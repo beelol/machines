@@ -200,7 +200,7 @@ PhysRelativeTime MachLogAIController::update( const PhysRelativeTime&, MATHEX_SC
 		int myIndexInAIRacesList = 0;
 		ctl_vector< MachPhys::Race > AIRaces;
 
-		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+		for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		{
 			if( races.raceInGame( i ) and ( races.nMachines( i ) + races.nConstructions( i ) ) > 0 )
 			{

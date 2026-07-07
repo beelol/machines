@@ -138,6 +138,12 @@ void NetNetwork::pollMessages()
 		pNetINetwork_->pollMessages();
 }
 
+void NetNetwork::flush()
+{
+	if(isValid())
+		pNetINetwork_->flush();
+}
+
 const NetNetwork::Sessions& NetNetwork::sessions() const
 {
 	PRE( isValidNoRecord() );

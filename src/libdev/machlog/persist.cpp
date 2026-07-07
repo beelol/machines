@@ -113,7 +113,7 @@ void MachLogPersistence::setDataForWrite() const
 {
 	MachLogPersistence& nonConstPer = *( _CONST_CAST( MachLogPersistence*, this ) );
 //removed for now	nonConstPer.planetName_ = MachLogRaces::instance().currentPlanet();
-//removed for now	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+//removed for now	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 //removed for now	{
 //removed for now		if( MachLogRaces::instance().raceObjects( i ).size() > 0 )
 //removed for now			nonConstPer.racePopulated_[ (int)i ] = true;

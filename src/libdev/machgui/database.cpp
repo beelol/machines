@@ -165,6 +165,11 @@ void MachGuiDatabase::readDatabase()
             ostr << *(pData_);
         }
     }
+    //Ensure a CUSTOM skirmish system always exists (possibly empty) so the
+    //skirmish menu's SMALL..CUSTOM loop never indexes out of bounds.
+    if( pData_->skirmishSystems_.size() < (MachGuiDatabase::CUSTOM + 1) )
+        pData_->skirmishSystems_.push_back( _NEW( MachGuiDbSystem( "CUSTOM", IDS_CUSTOM ) ) );
+
     //Read the user scenarios database
     if ( customDatabaseSourcePath().existsAsFile() )
         parseUserCampaignFile();
@@ -595,8 +600,9 @@ void MachGuiDatabase::parseScenario( UtlLineTokeniser& parser, MachGuiDbPlanet* 
 
 void MachGuiDatabase::parseUserCampaignFile()
 {
-    pData_->skirmishSystems_.push_back( _NEW( MachGuiDbSystem( "CUSTOM", IDS_CUSTOM ) ) );
-    
+    //The CUSTOM skirmish system is created unconditionally in readDatabase(),
+    //so index 3 is already valid for the SKIRMISHES fill below.
+
     //Open the data file constructing a parser
     UtlLineTokeniser parser( customDatabaseSourcePath() );
 

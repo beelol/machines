@@ -51,8 +51,13 @@ private:
     //  to seedFromTime will use a different seed.
     static  size_t  seedIncrement();
 
-    ulong state_;
-    ulong seed_;
+    //  Fixed-width (uint32 == unsigned int, 32-bit on both LP64/macOS and LLP64/Windows).
+    //  Previously ulong, which is 64-bit on macOS but 32-bit on Windows, so the LCG below
+    //  (state_ = state_ * 1103515245 + 12345) wrapped at different widths and produced a
+    //  different sequence per platform - a determinism/desync source. uint32 wraps mod 2^32
+    //  identically everywhere.
+    uint32 state_;
+    uint32 seed_;
 };
 
 //  Acccessor functions for getting the results of a

@@ -22,7 +22,7 @@ MachLogAllOtherRacesUnitsDeadCondition::MachLogAllOtherRacesUnitsDeadCondition( 
 {
     otherRace_.reserve( MachPhys::N_RACES );
 
-	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		if( i != race )
 			otherRace_.push_back( i );
 

@@ -37,7 +37,12 @@ ostream& operator <<( ostream& o, const SysWindowsAPI& t )
 //static
 void SysWindowsAPI::sleep( double milliseconds )
 {
-	//Sleep( milliseconds );
+	//Was a no-op after the SDL port, which turned every wait loop that calls this
+	//(network lobby waits, loader spins, message boxes) into a 100%-CPU busy loop and
+	//starved OS network scheduling. Restore the intended behaviour with SDL_Delay.
+	if( milliseconds < 0.0 )
+		milliseconds = 0.0;
+	SDL_Delay( _STATIC_CAST( Uint32, milliseconds ) );
 }
 
 //static

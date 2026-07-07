@@ -121,6 +121,9 @@ struct MachLogReadyMessage
 {
 	MachLogMessageHeader	header_;
 	MachPhys::Race			race_;
+	//Only meaningful for START_GAME: the host's shared RNG seed, applied by every peer so
+	//gameplay randomness matches across machines. uint32 = fixed 32-bit on all targets.
+	uint32					randomSeed_;
 };
 
 struct MachLogResyncTimeMessage

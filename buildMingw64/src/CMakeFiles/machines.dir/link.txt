@@ -1,3 +1,0 @@
-/usr/bin/cmake -E remove -f CMakeFiles/machines.dir/objects.a
-/usr/bin/ar cr CMakeFiles/machines.dir/objects.a @CMakeFiles/machines.dir/objects1.rsp
-/usr/bin/x86_64-w64-mingw32-g++-posix  -std=gnu++11 -m64 -Wall -Wold-style-cast -Wmissing-declarations -Wno-error=deprecated-declarations -Wsuggest-override  -O2  -m64 -s -Wl,--whole-archive CMakeFiles/machines.dir/objects.a -Wl,--no-whole-archive  -o ../machines.exe -Wl,--out-implib,libmachines.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/machines.dir/linklibs.rsp

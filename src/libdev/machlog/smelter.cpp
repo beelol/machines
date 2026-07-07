@@ -210,7 +210,7 @@ bool MachLogSmelter::validSmelterSite( const MexPoint3d& location, const MachLog
 //static
 bool MachLogSmelter::validForAllMines ( const MexPoint3d& location )
 {
-	for (MachPhys::Race r = MachPhys::RED; r != MachPhys::N_RACES; ++((int&)r) )
+	for (MachPhys::Race r = MachPhys::RED; r != MachPhys::N_RACES; r = static_cast<decltype(r)>(r + 1) )
 	{
 		for (MachLogRaces::Mines::iterator i = MachLogRaces::instance().mines( r ).begin();
 			i != MachLogRaces::instance().mines( r ).end(); ++i)

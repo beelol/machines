@@ -36,6 +36,11 @@ public:
     static  size_t randomInt( size_t upperLimit );
     //  POST( 0 <= result and result < upperLimit );
 
+    //  Seed the single shared gameplay random stream. In a network game every peer calls
+    //  this with the same host-broadcast seed at game start, so all machines draw the same
+    //  sequence (previously each used unseeded, platform-dependent libc rand()).
+    static  void seed( uint32 newSeed );
+
     void CLASS_INVARIANT;
 
 private:

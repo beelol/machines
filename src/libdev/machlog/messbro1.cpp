@@ -24,6 +24,8 @@
 #include "machlog/races.hpp"
 
 #include "machphys/machine.hpp"
+#include "machphys/random.hpp"
+#include "mathex/random.hpp"
 #include "machlog/machine.hpp"
 
 #include "machphys/consdata.hpp"
@@ -945,12 +947,29 @@ void MachLogMessageBroker::processResyncTimeMessage( NetMessage* pMessage )
 		simManager.resume();
 	}
 
-    //Check for time difference less than the threshold. If so, don't bother doing the resync, as it will
-    //cause unnecessary jumping of machines in motion.
-    PhysRelativeTime threshold = MachLogRaces::instance().stats().resyncThreshold();
+    //The host stamped its own sim time when it *sent* this message, so by the time we read
+    //it the host has already advanced by roughly the one-way trip. Add half the ENet
+    //round-trip time to estimate the host's *current* time. Without this the client sat
+    //permanently ~1 ping behind the host (the old code snapped straight to the stale value).
     PhysAbsoluteTime syncTime = pResyncMessage->now_;
-    if( Mathex::abs( simManager.currentTime() - syncTime ) > threshold )
-    	simManager.setSimulationTime( syncTime );
+    const ENetPeer* pSender = pMessage->header().sender();
+    if( pSender != NULL )
+        syncTime += ( pSender->roundTripTime / 2 ) / 1000.0;   //roundTripTime is in ms
+
+    //Correct the local clock. A hard jump teleports units in motion, so only snap for a
+    //large discrepancy (fresh join / long hitch); for the normal small drift, slew the
+    //clock part-way towards the host each resync so it converges smoothly with no visible
+    //warp. resyncThreshold() (0.6s) becomes the slew band; 3x it is the hard-snap cutoff.
+    const PhysRelativeTime deadband      = 0.1;                                              //ignore sub-100ms noise
+    const PhysRelativeTime hardThreshold = MachLogRaces::instance().stats().resyncThreshold() * 3.0;
+    const double           slewFraction  = 0.5;
+
+    PhysRelativeTime error = syncTime - simManager.currentTime();   //signed: +ve => host ahead
+    if( Mathex::abs( error ) > hardThreshold )
+        simManager.setSimulationTime( syncTime );
+    else if( Mathex::abs( error ) > deadband )
+        simManager.setSimulationTime( simManager.currentTime() + error * slewFraction );
+
 	if( resetSuspended )
 		simManager.suspend();
 }
@@ -1185,15 +1204,34 @@ ostream& operator <<( ostream& o, const MachLogSingleMoveInfo& t )
 	return o;
 };
 
+//The host generates the shared gameplay RNG seed once and reuses it for every START_GAME
+//send (the ready handshake sends START_GAME more than once). 0 means "not yet generated".
+static uint32 s_hostGameSeed = 0;
+
 void MachLogMessageBroker::sendStartGameMessage()
 {
 	DEBUG_STREAM( DIAG_NETWORK, "MLMessageBroker::sendStartGameMessage " << std::endl );
+
+	if( s_hostGameSeed == 0 )
+	{
+		//Build a full 32-bit seed from the 15-bit generator; avoid 0 (our "unset" sentinel).
+		MexBasicRandom seedGen = MexBasicRandom::constructSeededFromTime();
+		s_hostGameSeed = ( _STATIC_CAST( uint32, seedGen.next() ) << 17 )
+					   ^ ( _STATIC_CAST( uint32, seedGen.next() ) << 2 )
+					   ^   _STATIC_CAST( uint32, seedGen.next() );
+		if( s_hostGameSeed == 0 )
+			s_hostGameSeed = 1;
+		//Seed the host's own stream now (the host does not receive its own broadcast).
+		MachPhysRandom::seed( s_hostGameSeed );
+	}
+
 	MachLogNetMessage* pMessage = _NEW( MachLogNetMessage() );
 	MachLogReadyMessage* pReadyMessage = _REINTERPRET_CAST( MachLogReadyMessage*, pMessage );
 	pReadyMessage->header_.systemCode_ = 0;
 	pReadyMessage->header_.messageCode_ = START_GAME_CODE;
 	pReadyMessage->header_.totalLength_ = sizeof( MachLogReadyMessage );
 	pReadyMessage->race_ = MachLogRaces::instance().pcController().race();
+	pReadyMessage->randomSeed_ = s_hostGameSeed;
 	doSend( pMessage );
 	DEBUG_STREAM( DIAG_NETWORK, "MLMessageBroker::sendReadyMessage DONE " << std::endl );
 }
@@ -1202,7 +1240,12 @@ void MachLogMessageBroker::processStartGameMessage( NetMessage* pMessage )
 {
 	//MachLogReadyMessage* pReadyMessage = _REINTERPRET_CAST( MachLogReadyMessage*, &pMessage->body().body()[0] );
 	MachLogReadyMessage* pReadyMessage = _REINTERPRET_CAST( MachLogReadyMessage*, _CONST_CAST(uint8*, &pMessage->body().body()[0] ));
-	DEBUG_STREAM( DIAG_NETWORK,"processReadyMessage " << std::endl );
+	DEBUG_STREAM( DIAG_NETWORK,"processStartGameMessage seed " << pReadyMessage->randomSeed_ << std::endl );
+	//Adopt the host's shared RNG seed before the sim resumes, so this peer draws the same
+	//gameplay random sequence as the host. The client's sim is suspended until now, so no
+	//gameplay randomness has been consumed yet.
+	if( pReadyMessage->randomSeed_ != 0 )
+		MachPhysRandom::seed( pReadyMessage->randomSeed_ );
 	SimManager::instance().resume();
 }
 

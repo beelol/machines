@@ -366,6 +366,10 @@ void NetINetwork::pollMessages()
                     break;
             }
         }
+        //Push any packets relayed to peers above (host re-broadcast) straight out,
+        //instead of letting them wait for the next service call.
+        if( pHost_ != NULL )
+            enet_host_flush( pHost_ );
         NETWORK_STREAM("NetINetwork::pollMessages DONE\n" );
         RecRecorder::instance().recordingAllowed( true );
     }
@@ -403,6 +407,15 @@ void NetINetwork::sendMessage( const NetPriority& priority, const NetMessage::Ne
     enet_host_broadcast(pHost_, 0, packet);
 
     NetNetwork::instance().netINetwork().addSentMessage( body.lengthInBytes() );
+}
+
+void NetINetwork::flush()
+{
+    //enet_host_broadcast / enet_peer_send only queue packets; they are actually written
+    //to the socket by enet_host_service or enet_host_flush. Flushing here lets orders
+    //emitted during the sim leave the same frame instead of waiting for the next poll.
+    if( pHost_ != NULL )
+        enet_host_flush( pHost_ );
 }
 
 // Host a game
@@ -1163,48 +1176,63 @@ size_t NetINetwork::maxSentMessagesPerSecond() const
 	if( not initialisedFromRegistry )
 	{
 		NetINetwork *pMe = _CONST_CAST( NetINetwork *, this );
-		bool fromLan = ( currentProtocol() == NetNetwork::IPX );
+		//The original DirectPlay-era throttle was tuned for 56k modems: it capped
+		//outgoing traffic at 40 packets/s and 6 KB/s, which the message broker enforces
+		//by *caching and drip-feeding* orders once "stuffed" (see doSend). All transports
+		//now run over ENet/UDP, which does its own congestion control, so those caps are
+		//obsolete and are the primary cause of command lag even over LAN. Treat any ENet
+		//transport (IPX/UDP/TCPIP all map to the same UDP host) as high-capacity and let
+		//ENet govern the wire; the caps below stay only as a loose safety ceiling.
+		bool highCapacity = ( currentProtocol() == NetNetwork::IPX
+							or currentProtocol() == NetNetwork::UDP
+							or currentProtocol() == NetNetwork::TCPIP );
 		string keyValue = "Max packets per second";
 
-		if( fromLan )
+		if( currentProtocol() == NetNetwork::IPX )
 			keyValue += " (IPX)";
 
 		int possibleValue = SysRegistry::instance().queryIntegerValue("Network", keyValue );
 
 		if( possibleValue == 0 )
 		{
-			if( fromLan )
-				pMe->maxSentMessagesPerSecond_ = 100;
+			if( highCapacity )
+				pMe->maxSentMessagesPerSecond_ = 1000;
 			else
 				pMe->maxSentMessagesPerSecond_ = 40;
 			SysRegistry::instance().setIntegerValue("Network", keyValue, maxSentMessagesPerSecond_ );
 			possibleValue = maxSentMessagesPerSecond_;
 		}
 
-		if( possibleValue > 400 )
-			possibleValue = 400;
-		else if( possibleValue < 40 )
-			possibleValue = 40;
+		//Clamp. The floor is raised for high-capacity links so stale registry values
+		//written by older builds (e.g. 40) can no longer pin throughput down.
+		const int minPackets = highCapacity ? 500 : 40;
+		const int maxPackets = highCapacity ? 10000 : 400;
+		if( possibleValue > maxPackets )
+			possibleValue = maxPackets;
+		else if( possibleValue < minPackets )
+			possibleValue = minPackets;
 		pMe->maxSentMessagesPerSecond_ = possibleValue;
 
 		keyValue = "Max bytes per second";
-		if( fromLan )
+		if( currentProtocol() == NetNetwork::IPX )
 			keyValue += " (IPX)";
 		possibleValue = SysRegistry::instance().queryIntegerValue("Network", keyValue );
 
 		if( possibleValue == 0 )
 		{
-			if( fromLan )
-				pMe->maxBytesPerSecond_ = 60000;
+			if( highCapacity )
+				pMe->maxBytesPerSecond_ = 1000000;
 			else
 				pMe->maxBytesPerSecond_ = 6000;
 			SysRegistry::instance().setIntegerValue("Network", keyValue, maxBytesPerSecond_ );
 			possibleValue = maxBytesPerSecond_;
 		}
-		if( possibleValue > 60000 )
-			possibleValue = 60000;
-		else if( possibleValue < 6000 )
-			possibleValue = 6000;
+		const int minBytes = highCapacity ? 200000 : 6000;
+		const int maxBytes = highCapacity ? 10000000 : 60000;
+		if( possibleValue > maxBytes )
+			possibleValue = maxBytes;
+		else if( possibleValue < minBytes )
+			possibleValue = minBytes;
 		pMe->maxBytesPerSecond_ = possibleValue;
 
 		NETWORK_STREAM("NetINetwork::maxSentMessagesPerSecond initialisation maxPackets " << maxSentMessagesPerSecond_ << " max Bytes " << maxBytesPerSecond_ << std::endl );

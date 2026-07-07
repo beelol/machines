@@ -65,7 +65,7 @@ void perWrite( PerOstream& ostr, const MachLogRacesDataImpl& impl )
 	PER_WRITE_RAW_OBJECT( ostr, gameType );
 
 
-	for( MachPhys::Race i = MachPhys::RED ; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED ; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		const ctl_vector< MexPoint2d > tempPoints( impl.aggressorAssemblyPoints_[ i ] );
 		PER_WRITE_RAW_OBJECT( ostr, tempPoints );
@@ -74,7 +74,7 @@ void perWrite( PerOstream& ostr, const MachLogRacesDataImpl& impl )
 	}
 
 	HAL_STREAM("writing out score objects...\n" );
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		HAL_STREAM(" for race " << i << " pointer is " << (void*)impl.scores_[i] << std::endl );
 		MachLogScore& score = *( impl.scores_[i] );
@@ -110,7 +110,7 @@ void perRead( PerIstream& istr, MachLogRacesDataImpl& impl )
 	PER_READ_RAW_OBJECT( istr, gameType );
     impl.gameType_ = (MachLog::GameType)gameType;
 
-	for( MachPhys::Race i = MachPhys::RED ; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED ; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		MachLogRaces::AssemblyPoints tempPoints;
 		PER_READ_RAW_OBJECT( istr, tempPoints );
@@ -121,7 +121,7 @@ void perRead( PerIstream& istr, MachLogRacesDataImpl& impl )
 	}
 
 	HAL_STREAM("reading in score objects...\n" );
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		HAL_STREAM(" race " << i << " pointer is " << (void*)impl.scores_[i] << std::endl );
 		MachLogScore& score = *( impl.scores_[i] );

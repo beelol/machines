@@ -26,12 +26,13 @@ SysFileData::SysFileData(
   time_( time ),
   size_( size )
 {
-    string pathName( baseDirectory.pathname() );
-    if(pathName[pathName.length()-1] != '/')
-        pathName += "/";
-    pathName += relativePathName.pathname();
-
-    pathName_ = pathName;
+    // Append the RAW relative name to the base directory via combine().
+    // Do NOT concatenate relativePathName.pathname(): when an internal root
+    // directory is set (MACH_ROOT), pathname() resolves the leaf into an
+    // absolute path, corrupting the result into "<dir>/<root>/<leaf>".
+    SysPathName fullPath( baseDirectory.pathname() );
+    fullPath.combine( relativePathName );
+    pathName_ = fullPath;
 }
 
 SysFileData::SysFileData(
@@ -46,12 +47,13 @@ SysFileData::SysFileData(
   size_( UNKNOWN_SIZE )
 {
 
-    string pathName( baseDirectory.pathname() );
-    if(pathName[pathName.length()-1] != '/')
-        pathName += "/";
-    pathName += relativePathName.pathname();
-
-    pathName_ = pathName;
+    // Append the RAW relative name to the base directory via combine().
+    // Do NOT concatenate relativePathName.pathname(): when an internal root
+    // directory is set (MACH_ROOT), pathname() resolves the leaf into an
+    // absolute path, corrupting the result into "<dir>/<root>/<leaf>".
+    SysPathName fullPath( baseDirectory.pathname() );
+    fullPath.combine( relativePathName );
+    pathName_ = fullPath;
 }
 
 SysFileData::SysFileData( const SysFileData& copyMe )

@@ -98,6 +98,16 @@ void AfxSdlApp::coreLoop()
 {
     bool callApp = true;
 
+    // Frame limiter. Previously the loop ran flat out (SysWindowsAPI::sleep was a no-op),
+    // pegging a CPU core at 100%, heating the machine and starving the OS network stack so
+    // ENet servicing became uneven. Game speed is wall-clock driven, so capping the render
+    // rate does not change how fast the game plays - it only bounds max FPS and frees the
+    // CPU, which also steadies network polling. 60 FPS keeps input smooth (the sim itself
+    // targets ~33 FPS internally).
+    const Uint32 maxFrameRate = 60;
+    const Uint32 minFrameMs = 1000 / maxFrameRate;
+    Uint32 lastFrameMs = SDL_GetTicks();
+
     while (not isFinished())
     {
         // Check for messages in the queue.
@@ -144,6 +154,13 @@ void AfxSdlApp::coreLoop()
         {
 			loopCycle();
             callApp = false;
+
+            //Sleep off the remainder of the frame budget instead of spinning.
+            const Uint32 now = SDL_GetTicks();
+            const Uint32 elapsed = now - lastFrameMs;
+            if( elapsed < minFrameMs )
+                SDL_Delay( minFrameMs - elapsed );
+            lastFrameMs = SDL_GetTicks();
         }
     }
 

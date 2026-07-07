@@ -1,1 +1,0 @@
--I/opt/dev/src/../include/libdev -I/opt/dev/src/../include/projects -I/opt/dev/src/../external/libsmack -I/opt/dev/src/../external -isystem /usr/include/freetype2 -isystem /opt/dev/windows/include -isystem /opt/dev/windows/include/AL 

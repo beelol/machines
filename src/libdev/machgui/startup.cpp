@@ -330,6 +330,20 @@ void MachGuiStartupScreens::loopCycle()
 
 	checkSwitchGuiRoot();
 
+	// DEBUG: auto-jump straight into the skirmish screen for crash-repro looping.
+	// Enable with MACH_AUTO_SKIRMISH=1. Remove once the skirmish crash is fixed.
+	static const bool autoSkirmish = getenv( "MACH_AUTO_SKIRMISH" ) != NULL;
+	if( autoSkirmish )
+	{
+		static bool jumped = false;
+		if( not jumped and context_ != CTX_SKIRMISH and pPlayingSmacker_ == NULL )
+		{
+			jumped = true;
+			switchContext( CTX_SKIRMISH );
+			return;
+		}
+	}
+
 	if ( context_ == CTX_GAME or
 		 context_ == CTX_MULTI_GAME or
 		 context_ == CTX_SKIRMISH_GAME )
@@ -616,7 +630,7 @@ void MachGuiStartupScreens::switchGuiRootToSkirmishGame()
 	progressIndicator.report( 15, 100 );
 
 	// Initialise all player info to NOT_DEFINED
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		MachLogGameCreationData::PlayerCreationData pcd;
 		pcd.type_ = MachLog::NOT_DEFINED;
@@ -766,7 +780,7 @@ void MachGuiStartupScreens::switchGuiRootToMultiGame()
 	// Setup info about players
 	MachLogGameCreationData::PlayersCreationData creationData;
 
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		MachLogGameCreationData::PlayerCreationData pcd;
 		pcd.type_ = MachLog::NOT_DEFINED;
@@ -825,7 +839,7 @@ void MachGuiStartupScreens::switchGuiRootToMultiGame()
 	progressIndicator.report( 15, 100 );
 
 	//now we need to remark the colours of any unused ones.
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 	{
 		if( creationData[i].type_ == MachLog::NOT_DEFINED )
 		{
@@ -834,7 +848,7 @@ void MachGuiStartupScreens::switchGuiRootToMultiGame()
 			if( colourUsed[ creationData[i].colour_ ] )
 			{
 				//find unsed colour
-				for( MachPhys::Race j = MachPhys::RED; j < MachPhys::N_RACES; ++((int&)j) )
+				for( MachPhys::Race j = MachPhys::RED; j < MachPhys::N_RACES; j = static_cast<decltype(j)>(j + 1) )
 					if( not colourUsed[j] )
 					{
 						creationData[i].colour_ = j;
@@ -1704,7 +1718,14 @@ void MachGuiStartupScreens::loopCycleInGame()
 
 	//Update networking, including remote first person handlers
     if( MachLogNetwork::instance().isNetworkGame() )
+    {
+        //Second network pump of the frame. loopCycle() polls once *before* the sim; the
+        //SimManager::cycle() above then emits this frame's orders, which would otherwise
+        //sit until next frame's poll. Pumping again here flushes them immediately and
+        //picks up anything that arrived during the cycle - roughly halving command latency.
+        MachLogNetwork::instance().update();
         MachLogRaces::instance().remoteFirstPersonManager().update();
+    }
 
 	// If time is suspended for profiling, make the general position ID
 	// change, so that W4dEntity evaluates transforms is if time were advancing.
@@ -1786,13 +1807,15 @@ void MachGuiStartupScreens::loopCycleInGame()
  		}
 	}
 
-	//if we are the host then resync every 5 seconds or so.
-	//the resync will hopefully take care of the effective ping rates as well to get a correct time.
+	//If we are the host, broadcast our clock so peers stay aligned. Resync is now
+	//latency-compensated and slewed (see processResyncTimeMessage), so a shorter interval
+	//keeps clients tighter to the host with smaller, smoother corrections. The message is
+	//tiny (a single timestamp), so the extra frequency costs negligible bandwidth.
 	static PhysAbsoluteTime lastSyncTime = 0;
 	if( MachLogNetwork::instance().isNodeLogicalHost() )
 	{
 		PhysAbsoluteTime now = SimManager::instance().currentTime();
-		if( ( now - lastSyncTime ) > 5 )
+		if( ( now - lastSyncTime ) > 2 )
 		{
 			MachLogNetwork::instance().messageBroker().sendResyncTimeMessage();
 			lastSyncTime = now;

@@ -280,13 +280,13 @@ ostream& operator <<( ostream& o, const MachLogScore& t )
 	o << " otherMachinesDestroyed_ " << t.otherMachinesDestroyed() << std::endl;
 	o << " myConstructionsDestroyed_ " << t.myConstructionsDestroyed() << std::endl;
 	o << " otherConstructionsDestroyed_ " << t.otherConstructionsDestroyed() << std::endl;
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		o << " raceMyMachinesDestroyed_[ " << i << " ] " << t.raceMyMachinesDestroyed( i ) << std::endl;
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		o << " raceMachinesDestroyed_[ " << i << " ] " << t.raceMachinesDestroyed( i ) << std::endl;
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		o << " raceMyConstructionsDestroyed_[ " << i << " ] " << t.raceMyConstructionsDestroyed( i ) << std::endl;
-	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; ++((int&)i) )
+	for( MachPhys::Race i = MachPhys::RED; i < MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
 		o << " raceConstructionsDestroyed_[ " << i << " ] " << t.raceConstructionsDestroyed( i ) << std::endl;
 
 	o << " itemsResearched_ " << t.itemsResearched() << std::endl;
@@ -346,7 +346,7 @@ void MachLogScore::resetNumbers()
 	pImpl_->itemsResearched_ = 0;
 	pImpl_->totalResearchCost_ = 0;
 
-	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ++((int&)ridx) )
+	for( MachPhys::Race ridx = MachPhys::RED; ridx != MachPhys::N_RACES; ridx = static_cast<decltype(ridx)>(ridx + 1) )
 	{
 		pImpl_->raceMachinesDestroyed_[ ridx ] = 0;
 		pImpl_->raceConstructionsDestroyed_[ ridx ] = 0;

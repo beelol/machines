@@ -44,7 +44,7 @@ GuiDisplayable::GuiDisplayable( GuiDisplayable * pParent, const Gui::Boundary& r
 	changed( true );
 
 	pParent_->addChild( this, LAYER1 );
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		children_[layer].reserve( 2 );
 	}
@@ -72,7 +72,7 @@ GuiDisplayable::GuiDisplayable( GuiDisplayable * pParent, const Gui::Boundary& r
 	changed( true );
 
 	pParent_->addChild( this, myLayer );
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		children_[layer].reserve( 2 );
 	}
@@ -97,7 +97,7 @@ GuiDisplayable::GuiDisplayable( const Gui::Boundary& absBoundary )
 	useFastSecondDisplay_=true;
 	changed( true );
 
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		children_[layer].reserve( 2 );
 	}
@@ -344,7 +344,7 @@ void GuiDisplayable::removeChild( GuiDisplayable* pChild )
 		allChildren_.erase( i );
 	}
 
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		Children::iterator i = find( children_[layer].begin(), children_[layer].end(), pChild );
 
@@ -473,7 +473,7 @@ void GuiDisplayable::display()
 		else
 		{
 			// Check children to see if they need displaying
-			for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+			for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 			{
 				for ( Children::iterator i = children_[layer].begin(); i != children_[layer].end(); ++i )
 				{
@@ -492,7 +492,7 @@ void GuiDisplayable::normalDisplay()
 	doDisplay();
 
 	// Display all children
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		for ( Children::iterator i = children_[layer].begin(); i != children_[layer].end(); ++i )
 		{
@@ -527,7 +527,7 @@ void GuiDisplayable::fastDisplayChildren()
 {
 	CB_GUIDISPLAYABLE_DEPIMPL();
 
-	for ( Layer layer = LAYER1; layer < NUMLAYERS; ++((int&)layer) )
+	for ( Layer layer = LAYER1; layer < NUMLAYERS; layer = static_cast<decltype(layer)>(layer + 1) )
 	{
 		for ( Children::iterator i = children_[layer].begin(); i != children_[layer].end(); ++i )
 		{
@@ -831,7 +831,7 @@ bool GuiDisplayable::innermostContaining( const Gui::Coord& c, GuiDisplayable** 
 	{
 		for ( Layer layer = NUMLAYERS; layer != LAYER1 and not found; )
 		{
-			--((int&)layer);
+			layer = static_cast<decltype(layer)>(layer - 1);
 
 			// Check to see if any of the children contain the mouse pointer
 			for ( Children::iterator i = children_[layer].begin(); not found and i != children_[layer].end(); ++i )
@@ -914,7 +914,7 @@ bool GuiDisplayable::innermostContainingCheckProcessesMouseEvents( const Gui::Co
 	{
 		for ( Layer layer = NUMLAYERS; layer != LAYER1 and not found; )
 		{
-			--((int&)layer);
+			layer = static_cast<decltype(layer)>(layer - 1);
 
 			// Check to see if any of the children contain the mouse pointer
 			for ( Children::iterator i = children_[layer].begin(); not found and i != children_[layer].end(); ++i )

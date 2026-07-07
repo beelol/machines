@@ -180,7 +180,7 @@ ostream& operator <<( ostream& o, const MachLogConstructionItem& t )
 	o << " subType " << t.subType() << std::endl;
 	o << " hwLevel " << t.hwLevel() << std::endl;
 	o << " weapon combo " << t.weaponCombo() << " hasWC defined " << t.hasWeaponCombo() << std::endl;
-   	//for( MachPhys::Race i = 0; i != MachPhys::N_RACES; ++((int&)i) )
+   	//for( MachPhys::Race i = 0; i != MachPhys::N_RACES; i = static_cast<decltype(i)>(i + 1) )
    	for( MachPhys::Race i = MachPhys::RED; i != MachPhys::N_RACES; ++i )
 	{
 	   	o << " activated[" << i << "] " << t.activated( i ) << " activation locked " << t.activationLocked( i ) << std::endl;

@@ -243,7 +243,7 @@ MachContinentMap::MachContinentMap( GuiDisplayable* pParent, const Gui::Coord& r
 	cameraPosImage_.enableColourKeying();
 
 	// Switch on colour keying for map images
-	for ( MachPhys::Race race = MachPhys::RED; race < MachPhys::N_RACES; ++((int&)race) )
+	for ( MachPhys::Race race = MachPhys::RED; race < MachPhys::N_RACES; race = static_cast<decltype(race)>(race + 1) )
 	{
 		machineImage()[race].colourKey( black );
 		podImage()[race].colourKey( black );

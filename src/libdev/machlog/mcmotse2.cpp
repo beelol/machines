@@ -26,6 +26,7 @@
 #include "sim/manager.hpp"
 #include "mathex/sausag2d.hpp"
 #include "mathex/random.hpp"
+#include "machphys/random.hpp"
 #include "mathex/eulerang.hpp"
 #include "device/time.hpp"
 #include "machlog/internal/collinfo.hpp"
@@ -923,10 +924,8 @@ void MachLogMachineMotionSequencer::shuffle()
 
         do
         {
-            MexBasicRandom r;
-            r.seedFromTime();
-
-            const MexDegrees rotationAngle = mexRandomScalar( &r, -30.0, 30.0 );
+            //Shared gameplay stream instead of a wall-clock-seeded local RNG (determinism).
+            const MexDegrees rotationAngle = MachPhysRandom::randomDouble( -30.0, 30.0 );
 
             targetTransform.rotate( MexEulerAngles( rotationAngle, 0.0, 0.0 ) );
 

@@ -833,6 +833,11 @@ void MachInGameScreen::activeCommand( const MachGuiCommand& command )
 	// Can't issue commands if game is paused or network is busy
 	if ( SimManager::instance().isSuspended() or isNetworkStuffed() )
 	{
+		// Always-on diagnostic (NETWORK_STREAM is compiled out in release): record which gate
+		// blocked the player's command so a playtest can pin the "can't move/locate" bug.
+		std::cerr << "[cmd-blocked] suspended=" << SimManager::instance().isSuspended()
+		          << " networkStuffed=" << isNetworkStuffed()
+		          << " imStuffed=" << NetNetwork::instance().imStuffed() << std::endl;
 		MachGuiSoundManager::instance().playSound( "gui/sounds/clickbad.wav" );
 	}
 	else

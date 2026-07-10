@@ -365,6 +365,12 @@ MachLogConstruction* MachLogActorMaker::newLogConstruction
         DEFAULT_ASSERT_BAD_CASE( type );
     }
 
+	// A network create message with an out-of-range object type falls through the switch
+	// (DEFAULT_ASSERT_BAD_CASE is compiled out in release) leaving result NULL. Bail rather
+	// than dereferencing it.
+	if( result == NULL )
+		return NULL;
+
 	// lay pads on terrain
 	result->physConstruction().layPadsOnTerrain( *MachLogPlanet::instance().surface() );
 

@@ -12,6 +12,8 @@
 #include <csignal>
 #include <ctime>
 #include <cstring>
+#include <cstdlib>
+#include <string>
 
 // TODO: windows libs
 #ifdef _MSC_VER // Windows
@@ -64,10 +66,24 @@ ProProfiler& ProProfiler::instance()
     return instance_;
 }
 
+//  Keep the profiler output inside the per-instance writable dir when MACH_STATE_DIR is set
+//  (so parallel instances don't share profiler.dat); default to cwd as before.
+static std::string profilerOutputPath()
+{
+    if( const char* stateDir = getenv( "MACH_STATE_DIR" ) )
+    {
+        std::string path( stateDir );
+        if( not path.empty() and path[ path.size() - 1 ] != '/' )
+            path += '/';
+        return path + "profiler.dat";
+    }
+    return "profiler.dat";
+}
+
 ProProfiler::ProProfiler()
 : traceIntervalSeconds_( 50.0 / 1000.0 ),
   traceIntervalFixed_( false ),
-  outputStream_( "profiler.dat" ),
+  outputStream_( profilerOutputPath().c_str() ),
   memoryProfilingOn_( false ),
   isBufferingOutput_( false ),
   pMemoryBuffer_( NULL ),

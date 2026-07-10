@@ -20,3 +20,6 @@
 
 # macOS
 .DS_Store
+
+# Per-instance writable state created by scripts/run-two.sh (MACH_STATE_DIR)
+/.run/

@@ -152,6 +152,18 @@ MachPhysPlanetSurface::MachPhysPlanetSurface( W4dSceneManager* pSceneManager, co
     SysPathName environmentPath( pathname );
     environmentPath.extension( "env" );
 
+	// Most planets in the available asset set ship no .env file (only 1o1 and
+	// m_desert do). Without one, the parser completes no sky and the sky pointer
+	// stays null, which later crashes when the sky is made visible. Fall back to a
+	// known-present .env so the sky/fog/satellites render and the game keeps running.
+	if( not environmentPath.existsAsFile() )
+	{
+		SysPathName fallbackEnv( "models/planet/m_desert/m_desert.env" );
+		LIONEL_STREAM("No environment file " << environmentPath.pathname()
+			<< "; falling back to " << fallbackEnv.pathname() << std::endl);
+		environmentPath = fallbackEnv;
+	}
+
 	//Create an environment for the sky etc
 	pEnvironment_ = _NEW( EnvPlanetEnvironment( environmentPath, pSceneManager ) );
 

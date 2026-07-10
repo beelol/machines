@@ -374,7 +374,8 @@ void EnvPlanetEnvironment::nvgOn(bool on)
 		if (isNvgOn_)
 		{
 			lightXform_ = _NEW(EnvNVGLightTransform(nvgFilterColour_));
-			sky_->overrideColour(nvgSkyColour_);
+			if( sky_ )
+				sky_->overrideColour(nvgSkyColour_);
 			pDevice->staticOn();
 
 			if (skyline_)
@@ -387,7 +388,8 @@ void EnvPlanetEnvironment::nvgOn(bool on)
 		else
 		{
 			pDevice->staticOff();
-			sky_->resetColour();
+			if( sky_ )
+				sky_->resetColour();
 
 			if (skyline_)
 				skyline_->resetColour();
@@ -688,6 +690,9 @@ void EnvPlanetEnvironment::visibleSatellites( bool setVisible )
 
 void EnvPlanetEnvironment::visibleStars( bool setVisible )
 {
+	if( not sky_ )
+		return;
+
 	W4dStars* pStars = sky_->pStars();
 	if( pStars )
 		pStars->visible( setVisible );

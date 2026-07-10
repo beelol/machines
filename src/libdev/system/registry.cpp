@@ -19,6 +19,29 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <cstdlib>
+
+//  Resolve the config/registry file path, allowing per-instance isolation via env vars so
+//  multiple instances (e.g. two clients testing multiplayer on one machine) don't read and
+//  rewrite the same file. Defaults to the historic cwd-relative "config.xml" when unset, so
+//  production behaviour is unchanged.
+//    MACH_CONFIG    - explicit full path to the config file (highest priority)
+//    MACH_STATE_DIR - directory to hold writable state; config becomes <dir>/config.xml
+static std::string resolveConfigPath()
+{
+    if( const char* explicitPath = getenv( "MACH_CONFIG" ) )
+        return std::string( explicitPath );
+
+    if( const char* stateDir = getenv( "MACH_STATE_DIR" ) )
+    {
+        std::string path( stateDir );
+        if( not path.empty() and path[ path.size() - 1 ] != '/' )
+            path += '/';
+        return path + "config.xml";
+    }
+
+    return "config.xml";
+}
 
 class SysRegistryImpl
 {
@@ -85,7 +108,7 @@ SysRegistry& SysRegistry::instance()
 }
 
 SysRegistry::SysRegistry()
-:	pImpl_( _NEW ( SysRegistryImpl ) )
+:	pImpl_( _NEW ( SysRegistryImpl( resolveConfigPath() ) ) )
 {
 
     TEST_INVARIANT;

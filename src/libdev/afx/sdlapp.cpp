@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cstdlib>
 #include "afx/sdlapp.hpp"
 #include "device/mouse.hpp"
 #include "device/keyboard.hpp"
@@ -73,8 +74,19 @@ bool AfxSdlApp::OSStartup ()
 {
     // Create window
     SDL_Init(SDL_INIT_VIDEO);
+
+	// Allow the window position to be pinned via env vars so multiple instances on one
+	// machine don't stack exactly on top of each other (both otherwise centre). Unset =
+	// centred, as before.
+	int winX = SDL_WINDOWPOS_CENTERED;
+	int winY = SDL_WINDOWPOS_CENTERED;
+	if( const char* pX = getenv( "MACH_WIN_X" ) )
+		winX = atoi( pX );
+	if( const char* pY = getenv( "MACH_WIN_Y" ) )
+		winY = atoi( pY );
+
 	pWindow_ = SDL_CreateWindow( name().c_str(),
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		winX, winY,
 		640, 480, // initial width and height
 		SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 

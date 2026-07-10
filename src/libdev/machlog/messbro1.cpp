@@ -745,15 +745,19 @@ void MachLogMessageBroker::processCreateActorMessage( NetMessage* pMessage )
 	DEBUG_STREAM( DIAG_NETWORK,"processCreateActorMessage " << pCreateMessage->objectType_ << std::endl );
 	DEBUG_STREAM( DIAG_NETWORK, *pCreateMessage << std::endl );
 
-	#ifndef PRODUCTION
+	// A duplicate create (e.g. a build packet relayed/received twice, or an id collision after a
+	// desync) would spawn a second actor with the same id and corrupt the world. Skip it in every
+	// build, not just when logging is compiled in.
 	if( MachLogRaces::instance().actorExists( pCreateMessage->whichId_ ) )
 	{
+		#ifndef PRODUCTION
 		NETWORK_ERRORS_STREAM("NE01: Actor with id " << pCreateMessage->whichId_ << " ALREADY Exists\nActor:\n" );
 		NETWORK_ERRORS_INDENT( 2 );
 		NETWORK_ERRORS_STREAM( MachLogRaces::instance().actor( pCreateMessage->whichId_ ) << std::endl );
 		NETWORK_ERRORS_INDENT( -2 );
+		#endif
+		return;
 	}
-	#endif
 
 	switch( pCreateMessage->objectType_ )
 	{

@@ -34,6 +34,12 @@ W4dDomain* MachLogPlanetDomains::pDomainPosition
     MachPhysPlanetSurface* pSurface = MachLogPlanet::instance().surface();
     W4dDomain* pDomain = pSurface->domainAt( globalLocation );
 
+    //A construction created from a network message carries a wire position that may fall off
+    //the planet surface (bad/duplicate build packet). domainAt() only asserts containment in
+    //debug; in release it can return NULL, so guard before dereferencing.
+    if( pDomain == NULL )
+        return NULL;
+
     //Create the global transform to the position
     MexTransform3d globalTransform( MexEulerAngles( zAngle, 0, 0 ), globalLocation );
 

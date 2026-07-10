@@ -66,6 +66,62 @@ lockstep; **cross-platform (macOS arm64 ↔ Windows) required.**
 - **Phase 4 — lockstep conversion (fixed tick, command scheduling, fixed-point math, retire
   event echo + add desync checksum) — TODO; re-scope after 1–3 ship.**
 
+## Local two-instance testing (env-path isolation, native — no Docker)
+Two instances on one Mac can join a localhost match. The blocker was a shared, cwd-relative
+`config.xml` both processes rewrite. Fix: env-driven writable-state paths (defaults unchanged):
+- `MACH_STATE_DIR` — per-instance writable dir; `config.xml` + `profiler.dat` go there
+  (`system/registry.cpp` `resolveConfigPath()`, `profiler/profiler.cpp` `profilerOutputPath()`).
+  `MACH_CONFIG` overrides the config path outright. Assets stay shared via `MACH_ROOT`.
+- `MACH_WIN_X` / `MACH_WIN_Y` — SDL window position (`afx/sdlapp.cpp`), else centred.
+- `scripts/run-two.sh` (+ `make run-two`): seeds two isolated state dirs from the base
+  (windowed) config, launches host+join side by side, and reliably kills BOTH on Ctrl-C
+  (trap INT/TERM/EXIT; each game `exec`'d so `$!` is the real PID). `.run/` is gitignored.
+- No auto host/join yet — drive menus (host: Multiplayer→UDP→CREATE; join: UDP→IP `localhost`
+  →JOIN). Verified: config/profiler land in `MACH_STATE_DIR`, shared asset config untouched,
+  teardown kills both. Playability still depends on MP scenario assets being complete.
+
+## Multiplayer bugs found via two-instance testing (both fixed)
+**Start-game crash (was the "skirmish crash" too).** Only 2 of 47 planet dirs in the asset set
+ship a `.env` (`1o1`, `m_desert`); MP/skirmish planets have none. `EnvIPlanetParser::parse`
+then completes no sky, `EnvPlanetEnvironment::sky_` stays null, and `visibleStars()`
+(`envirnmt/planet.cpp:691`) derefs `sky_->pStars()` → SIGSEGV. The file-exists and null asserts
+(`plaparse.cpp:81`, `planet.cpp:121`) are compiled out in release. Fixes: `machphys/plansurf.cpp`
+falls back to `models/planet/m_desert/m_desert.env` when a planet's own `.env` is missing (the
+original engine had no default-env concept — each planet shipped its own); plus null-guards on the
+`sky_->` derefs in `planet.cpp` (`visibleStars` :691, NVG override/reset :377/:390) as
+defense-in-depth.
+
+**Joiner's lobby roster blank (chat worked).** `netinet.cpp pollMessages` treats each peer's
+first packet as its "introduction name" and drops it. The host never sends the client a name
+packet, so the host's first real message — the roster sync — was swallowed on the client. Fix:
+`joinAppSession` seeds the host peer's `pPeer->data` with a deletable `_NEW_ARRAY` placeholder
+right after sending our name, so the client enqueues all host messages instead of eating the first.
+
+`scripts/run-two.sh` now captures each instance's stdout/stderr to `$RUN_DIR/<inst>/output.log`
+and sets `CB_ASSERT_TO` per instance (this crash was only diagnosable via the macOS `.ips` report).
+
+## Second playtest bugs (crash fixed; 2 behavioural bugs instrumented)
+**Build crashes the other client (crash fixed).** A remote-built construction is a
+`W4dSubject`+`W4dObserver` parented under a planet `W4dDomain`. On scene teardown, `~W4dDomain`
+frees its `pImpl_` (`world4d/domain.cpp:71`) before its base `~W4dEntity` re-parents a counted-ptr
+child to `hiddenRoot`, which calls `W4dSubjectImpl::updateDomainObservers` → `observers()` on a
+NULL new-domain (`subjecti.cpp:89`) / freed old-domain (`:100`) → SIGSEGV at `0x10`. Fixed by
+null-guarding both domains at `subjecti.cpp:81`. Hardened the remote-build receive path too:
+skip duplicate-id creates in all builds (`messbro1.cpp` `processCreateActorMessage`), null-check
+`pDomainPosition` (`plandoms.cpp`) and `newLogConstruction` result (`actmaker.cpp`).
+
+**Host can't command own units to move/locate (instrumented, not yet fixed).** Move
+(`cmdmove.cpp:628`) and locate (`cmdlocto.cpp:234`) arm via `activeCommand()`, blocked when
+`SimManager::isSuspended() or isNetworkStuffed()` (`ingame.cpp:834`). Name-based `localRace`
+mis-tag is ruled out (distinct names, host race = PC_LOCAL); resync suspend/resume is balanced.
+Leading suspect: `isNetworkStuffed()` latching on the relay host. Added always-on `std::cerr`
+diagnostics (release strips `NETWORK_STREAM`): `[cmd-blocked]` logs which gate fired
+(`ingame.cpp`), `[mp-ownership]` dumps localRace + per-race PC_LOCAL/REMOTE tags at game start
+(`startup.cpp`), `[leave-game]` logs session-lost/terminate (`sysmess.cpp`). `run-two.sh` now
+writes timestamped per-run logs under `.run/logs/<ts>/` so a crash log survives the next launch.
+Next: one `make run-two` playtest reads these logs to pin the gate, then relax the
+`ingame.cpp:834` check (a full send queue should pace outbound traffic, not reject local input).
+
 ## Verification notes
 - macOS build: `cd buildMacOS && make -j8`. Windows: `DOCKER_API_VERSION=1.44 docker/docker_build_win64.sh`.
 - Phases 1-3 verified building on BOTH macOS arm64 and Windows x86_64/mingw (machines.exe built).

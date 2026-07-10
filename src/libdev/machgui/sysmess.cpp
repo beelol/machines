@@ -46,6 +46,7 @@ public:
 	{};
     virtual void execute()
     {
+		std::cerr << "[leave-game] session-lost terminator firing: deleting game children" << std::endl;
 		NETWORK_STREAM("MachGuiSessionLostGameTerminatorEvent::execute\n" );
 
 		//if we got into this screen via a lobby session then we need to terminate correctly at this point.
@@ -176,6 +177,7 @@ bool	MachGuiSystemMessageHandler::handleDestroyPlayerMessage( const string& name
 //virtual
 bool	MachGuiSystemMessageHandler::handleSessionLostMessage()
 {
+	std::cerr << "[leave-game] handleSessionLostMessage (inGame=" << respondAsInGame() << ")" << std::endl;
     NETWORK_STREAM("MachGuiSystemMessageHandler::handleSessionLostMessage\n" );
 	if( respondAsInGame() )
 	{

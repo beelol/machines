@@ -33,6 +33,12 @@ dev: run
 run: build-release
 	cd "$(ASSET_DIR)" && MACH_ROOT="$(ASSET_DIR)" "$(RELEASE_BIN)" $(WIN)
 
+## run-two: build release, then launch two isolated instances (side-by-side windows,
+##          separate MACH_STATE_DIR each) for local multiplayer testing. Ctrl-C closes both.
+.PHONY: run-two
+run-two: build-release
+	scripts/run-two.sh
+
 ## debug: build + run the DEBUG binary from the asset dir. Note: debug aborts on
 ##        debug-only asset preconditions during startup preload that release skips,
 ##        so it is for diagnosis/backtraces, not for reaching the menus.

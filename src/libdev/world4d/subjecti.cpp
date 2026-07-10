@@ -78,7 +78,12 @@ void W4dSubjectImpl::updateDomainObservers( const W4dEntity& oldParent )
                              oldParent.containingDomain() );
     W4dDomain* pNewDomain = physObjectPtr_->containingDomain();
 
-    if( pOldDomain != pNewDomain )
+    // During scene-graph teardown a domain frees its impl (W4dDomain::~W4dDomain) before its
+    // base ~W4dEntity re-parents counted-ptr children to the hidden root. That re-parent lands
+    // here with pNewDomain == NULL (the hidden root is not in a domain) and/or pOldDomain being
+    // the half-destroyed domain, so calling observers() on either dereferences freed/NULL
+    // memory (W4dDomain::pImpl_) and crashes. Only touch the domains when both are valid.
+    if( pOldDomain != NULL and pNewDomain != NULL and pOldDomain != pNewDomain )
     {
         //Construct a list of the direct observers of this subject
         W4dObservers allObservers;

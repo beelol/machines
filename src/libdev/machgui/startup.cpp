@@ -832,6 +832,14 @@ void MachGuiStartupScreens::switchGuiRootToMultiGame()
 		}
 	}
 
+	// Always-on diagnostic: which race this node owns and how every race was tagged. A
+	// mismatch here (own race tagged PC_REMOTE) is why a player can't command its own units.
+	std::cerr << "[mp-ownership] localRace=" << (int)MachLogNetwork::instance().localRace()
+	          << " isHost=" << MachLogNetwork::instance().isNodeLogicalHost();
+	for( int r = 0; r < 4; ++r )
+		std::cerr << " race" << r << "=" << (int)creationData[r].type_;
+	std::cerr << std::endl;
+
 	NetNetwork::instance().messageThrottlingActive( true );
 	NetNetwork::instance().autoAdjustMaxPacketsPerSecond( numberOfPlayers );
 

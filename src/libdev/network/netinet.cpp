@@ -460,6 +460,16 @@ NetAppSession* NetINetwork::joinAppSession( const NetAppSessionUid& sessionUid )
       ENetPacket *packet = enet_packet_create(localPlayerName_.c_str(), localPlayerName_.length()+1,
           ENET_PACKET_FLAG_RELIABLE);
       enet_peer_send(pPeer, 0, packet);
+
+      // pollMessages() treats the first packet from a peer whose data is still null
+      // as that peer's "introduction name" and drops it. The host never sends us a
+      // name packet, so without this its first real message (the lobby roster sync)
+      // would be swallowed and the joiner's player list would never populate. Seed a
+      // deletable placeholder (freed by _DELETE_ARRAY on disconnect) so every message
+      // from the host is enqueued normally.
+      char *hostData = _NEW_ARRAY(char, 5);
+      strcpy(hostData, "host");
+      pPeer->data = hostData;
     }
     else
     {

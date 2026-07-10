@@ -122,6 +122,25 @@ writes timestamped per-run logs under `.run/logs/<ts>/` so a crash log survives 
 Next: one `make run-two` playtest reads these logs to pin the gate, then relax the
 `ingame.cpp:834` check (a full send queue should pace outbound traffic, not reject local input).
 
+## In-app crash logging + playtest findings (3rd round)
+Release is `-DPRODUCTION` (no NETWORK_STREAM) and some crashes produce no OS `.ips` (or the
+process is SIGKILLed on teardown), so crashes were undiagnosable. Added an **in-app crash
+handler** (`afx/sdlapp.cpp`): SIGSEGV/ABRT/BUS/ILL/FPE dump a symbolic backtrace
+(`backtrace_symbols_fd`) to stderr — captured by `run-two.sh`'s per-run logs — then re-raise the
+default handler. `ALWAYS_ASSERT`/`TerminateOnError` (`base/error.cpp`) now logs its message +
+backtrace before `exit(1)`; the top-level `catch` logs `what()`. execinfo is macOS/Linux only
+(skipped on the mingw cross-build). Verified: sending SIGSEGV yields a full `[CRASH]` backtrace.
+
+Playtest findings from the instrumentation:
+- **Bug 1 is NOT ownership mis-tagging.** `[mp-ownership]` confirmed each node tags its own race
+  PC_LOCAL and the opponent PC_REMOTE (host: `localRace=0 race0=0 race1=1`; client:
+  `localRace=1 race1=0 race0=1`). So the "can't command own units" gate is `isSuspended()` /
+  `isNetworkStuffed()` — still to be caught by `[cmd-blocked]` on repro.
+- **Combat crash:** the host process dies mid-combat with no `[leave-game]` log and no `.ips`; the
+  client then gets `handleSessionLostMessage` and leaves cleanly (our teardown fix held — no
+  shutdown SIGSEGV). Suspected in the network unit-death path (`messbro2.cpp processBeHitMessage`
+  kills actors via `beHit`), but needs the new crash backtrace to fix. Next repro will capture it.
+
 ## Verification notes
 - macOS build: `cd buildMacOS && make -j8`. Windows: `DOCKER_API_VERSION=1.44 docker/docker_build_win64.sh`.
 - Phases 1-3 verified building on BOTH macOS arm64 and Windows x86_64/mingw (machines.exe built).

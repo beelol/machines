@@ -1,5 +1,8 @@
 #include <sstream>
 #include <cstdlib>
+#include <cstring>
+#include <csignal>
+#include <unistd.h>
 #include "afx/sdlapp.hpp"
 #include "device/mouse.hpp"
 #include "device/keyboard.hpp"
@@ -8,6 +11,66 @@
 
 #include "recorder/recorder.hpp"
 #include <SDL2/SDL.h>
+
+// In-app crash diagnostics. The game runs release/-DPRODUCTION (network logging
+// compiled out) and some crashes (or a parent SIGKILL) never produce an OS crash
+// report, so we dump a symbolic backtrace straight to stderr, which the run logs
+// capture. execinfo is available on macOS/Linux; skipped on the mingw cross-build.
+#if defined(__APPLE__) || defined(__linux__)
+#include <execinfo.h>
+#define MACH_HAVE_EXECINFO 1
+#endif
+
+namespace
+{
+    // Async-signal-safe: only write() of constant strings + backtrace_symbols_fd().
+    void machDumpBacktrace( const char* reason )
+    {
+        write( STDERR_FILENO, "\n[CRASH] ", 9 );
+        if( reason )
+            write( STDERR_FILENO, reason, strlen( reason ) );
+        write( STDERR_FILENO, " - backtrace:\n", 14 );
+    #ifdef MACH_HAVE_EXECINFO
+        void* frames[64];
+        int count = backtrace( frames, 64 );
+        backtrace_symbols_fd( frames, count, STDERR_FILENO );
+    #endif
+    }
+
+    void machSignalHandler( int sig )
+    {
+        const char* name = "signal";
+        switch( sig )
+        {
+            case SIGSEGV: name = "SIGSEGV"; break;
+            case SIGABRT: name = "SIGABRT"; break;
+            case SIGBUS:  name = "SIGBUS";  break;
+            case SIGILL:  name = "SIGILL";  break;
+            case SIGFPE:  name = "SIGFPE";  break;
+        }
+        machDumpBacktrace( name );
+
+        // Restore the default handler and re-raise so the OS still writes its own
+        // report (and the exit status reflects the real fault).
+        signal( sig, SIG_DFL );
+        raise( sig );
+    }
+
+    void machInstallCrashHandler()
+    {
+        signal( SIGSEGV, machSignalHandler );
+        signal( SIGABRT, machSignalHandler );
+        signal( SIGBUS,  machSignalHandler );
+        signal( SIGILL,  machSignalHandler );
+        signal( SIGFPE,  machSignalHandler );
+    }
+}
+
+// Exposed for the top-level catch and ALWAYS_ASSERT (see base/error.cpp).
+void machLogCrashBacktrace( const char* reason )
+{
+    machDumpBacktrace( reason );
+}
 
 AfxSdlApp::AfxSdlApp():
 finished_(false),
@@ -20,6 +83,8 @@ AfxSdlApp::~AfxSdlApp()
 
 int main(int argc, char* argv[])
 {
+    machInstallCrashHandler();
+
     Diag::instance();
 
     try
@@ -27,8 +92,19 @@ int main(int argc, char* argv[])
         AfxSdlApp::sdlInstance().initialise(argc, argv);
         return AfxApp::abstractInstance().run();
     }
+    catch( const std::exception& e )
+    {
+        std::cerr << "[CRASH] uncaught std::exception: " << e.what() << std::endl;
+        machLogCrashBacktrace( "uncaught std::exception" );
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                                 "Crash",
+                                 "A fatal error has occurred, application will be terminated.",
+                                 NULL);
+        return -1;
+    }
     catch(...)
     {
+        machLogCrashBacktrace( "uncaught unknown exception" );
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
                                  "Crash",
                                  "A fatal error has occurred, application will be terminated.",
